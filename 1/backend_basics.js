@@ -1,15 +1,4 @@
-Sure! I’ll provide you with a minimal but complete example to illustrate:
-
-- A simple backend user model including subscription info.
-- Node.js/Express server with:
-  - User login endpoint (mocked for simplicity).
-  - Profile endpoint returning subscription status.
-  - Stripe webhook handler updating subscription status.
-- Frontend example using vanilla JS to login, fetch profile, and toggle UI based on subscription.
-
----
-
-## 1. Backend: Minimal User Model (in-memory for demo)
+//1. Backend: Minimal User Model (in-memory for demo)
 
 ```javascript
 // users.js - simple user storage for demo
@@ -49,9 +38,7 @@ module.exports = {
 };
 ```
 
----
-
-## 2. Backend: Express Server (`server.js`)
+// 2. Backend: Express Server (`server.js`)
 
 ```javascript
 require('dotenv').config();
@@ -169,105 +156,9 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-```
+``
+//3. Frontend: Simple Login and Profile Fetch Example
 
----
-
-## 3. Frontend: Simple Login and Profile Fetch Example
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Subscription Demo Frontend</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; background: #222; color: #eee; }
-    input, button { font-size: 1rem; margin: 0.5rem 0; }
-    #status { margin-top: 1rem; font-weight: bold; }
-  </style>
-</head>
-<body>
-  <h1>Login</h1>
-  <form id="login-form">
-    <label>
-      Email: <input type="email" id="email" value="user@example.com" required />
-    </label><br />
-    <label>
-      Password: <input type="password" id="password" value="password123" required />
-    </label><br />
-    <button type="submit">Login</button>
-  </form>
-
-  <div id="status"></div>
-
-  <script>
-    const form = document.getElementById('login-form');
-    const statusDiv = document.getElementById('status');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      try {
-        const res = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-
-        if (!res.ok) {
-          const err = await res.json();
-          statusDiv.textContent = 'Login failed: ' + (err.error || res.statusText);
-          return;
-        }
-
-        const data = await res.json();
-        localStorage.setItem('authToken', data.token);
-        statusDiv.textContent = `Logged in as ${data.user.email} (Status: ${data.user.subscriptionStatus})`;
-
-        // Fetch profile to confirm subscription status
-        fetchProfile();
-      } catch (err) {
-        statusDiv.textContent = 'Error: ' + err.message;
-      }
-    });
-
-    async function fetchProfile() {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        statusDiv.textContent = 'Not logged in.';
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/profile', {
-          headers: { 'Authorization': 'Bearer ' + token }
-        });
-        if (!res.ok) {
-          statusDiv.textContent = 'Failed to fetch profile.';
-          return;
-        }
-        const user = await res.json();
-        statusDiv.textContent = `User: ${user.email}, Subscription: ${user.subscriptionStatus}`;
-
-        // Here toggle UI features based on user.subscriptionStatus
-        if (user.subscriptionStatus === 'subscriber') {
-          console.log('Enable subscriber features');
-        } else {
-          console.log('Enable visitor features');
-        }
-      } catch (err) {
-        statusDiv.textContent = 'Error fetching profile: ' + err.message;
-      }
-    }
-
-    // Optionally fetch profile if already logged in on page load
-    window.onload = fetchProfile;
-  </script>
-</body>
-</html>
 ```
 
 ---
