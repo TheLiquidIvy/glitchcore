@@ -1,12 +1,7 @@
-Perfect! We’ll proceed in parts, starting with the backend setup, then the frontend, and so on.
+// Part 1: Backend Setup
 
----
+// 1. `models.js`
 
-# Part 1: Backend Setup
-
-### 1. `models.js`
-
-```javascript
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -59,13 +54,9 @@ User.hasMany(PodDraft, { foreignKey: 'userId' });
 User.hasMany(Recommendation, { foreignKey: 'userId' });
 
 module.exports = { sequelize, User, Order, PodDraft, Recommendation, Image, Op };
-```
 
----
+// 2. `middleware/authenticateToken.js`
 
-### 2. `middleware/authenticateToken.js`
-
-```javascript
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config');
 
@@ -82,13 +73,9 @@ function authenticateToken(req, res, next) {
 }
 
 module.exports = authenticateToken;
-```
 
----
+// 3. `config.js`
 
-### 3. `config.js`
-
-```javascript
 require('dotenv').config();
 
 module.exports = {
@@ -97,13 +84,9 @@ module.exports = {
   STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY || '',
   STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET || '',
 };
-```
 
----
+// 4. `routes/auth.js` (Register/Login)
 
-### 4. `routes/auth.js` (Register/Login)
-
-```javascript
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -151,13 +134,9 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
-```
 
----
+// 5. `routes/dashboard.js` (User Dashboard Data)
 
-### 5. `routes/dashboard.js` (User Dashboard Data)
-
-```javascript
 const express = require('express');
 const { Order, PodDraft, Recommendation, Image, Op } = require('../models');
 const authenticateToken = require('../middleware/authenticateToken');
@@ -185,27 +164,10 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 module.exports = router;
-```
-
----
-
-I’ll pause here so you can set these up. Next, I’ll generate:
-
-- `routes/podDrafts.js` (POD drafts CRUD API)
-- `routes/admin.js` (Admin endpoints skeleton)
-- `server.js` (Express app entry)
-
-Sound good?
 
 
+// 6. `routes/podDrafts.js` (POD Drafts CRUD API)
 
-Great! Here are the next backend parts:
-
----
-
-### 6. `routes/podDrafts.js` (POD Drafts CRUD API)
-
-```javascript
 const express = require('express');
 const { PodDraft } = require('../models');
 const authenticateToken = require('../middleware/authenticateToken');
@@ -275,13 +237,9 @@ router.delete('/:id', authenticateToken, async (req, res) => {
 });
 
 module.exports = router;
-```
 
----
+// 7. `routes/admin.js` (Admin Endpoints Skeleton)
 
-### 7. `routes/admin.js` (Admin Endpoints Skeleton)
-
-```javascript
 const express = require('express');
 const { User, Order, PodDraft } = require('../models');
 const authenticateToken = require('../middleware/authenticateToken');
@@ -330,13 +288,9 @@ router.get('/podDrafts', authenticateToken, checkAdmin, async (req, res) => {
 });
 
 module.exports = router;
-```
 
----
+// 8. `server.js` (Express App Entry Point)
 
-### 8. `server.js` (Express App Entry Point)
-
-```javascript
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -369,50 +323,22 @@ sequelize.sync({ alter: true }).then(() => {
 }).catch(err => {
   console.error('Failed to sync DB:', err);
 });
-```
 
----
 
-### Next Steps
 
-- Add Stripe integration routes & webhook handler.
-- Frontend React app with login/register, dashboard, and POD drafts UI.
-- Admin panel frontend starter.
+// Part 2: Frontend React App Setup
 
----
+// 1. `src/index.js`
 
-Ready for Part 2: Frontend React app? Or want Stripe integration backend next?
-
-Great! Let’s build the frontend React app step-by-step.
-
----
-
-# Part 2: Frontend React App Setup
-
-Here’s a minimal React app with:
-
-- User Authentication (Login/Register)
-- Dashboard page (shows orders, drafts, recommendations)
-- POD Drafts Manager UI (create/edit/delete drafts)
-
----
-
-### 1. `src/index.js`
-
-```jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-```
 
----
+// 2. `src/App.js`
 
-### 2. `src/App.js`
-
-```jsx
 import React, { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import PodDraftsManager from './components/PodDraftsManager';
@@ -531,13 +457,9 @@ function RegisterForm({ setToken, switchToLogin }) {
 }
 
 export default App;
-```
 
----
+// 3. `src/components/Dashboard.js`
 
-### 3. `src/components/Dashboard.js`
-
-```jsx
 import React, { useEffect, useState } from 'react';
 
 function Dashboard({ token }) {
@@ -608,13 +530,9 @@ function Dashboard({ token }) {
 }
 
 export default Dashboard;
-```
 
----
+// 4. `src/components/PodDraftsManager.js`
 
-### 4. `src/components/PodDraftsManager.js`
-
-```jsx
 import React, { useState, useEffect } from 'react';
 
 function PodDraftsManager({ token }) {
@@ -735,23 +653,4 @@ function PodDraftsManager({ token }) {
 }
 
 export default PodDraftsManager;
-```
 
----
-
-### How to Run
-
-1. Create React app or add these files to your React project.
-2. Make sure backend is running on `/api` (e.g., proxy in `package.json`: `"proxy": "http://localhost:3001"`).
-3. Run `npm start` or `yarn start`.
-4. Register a new user, login, access dashboard and manage POD drafts.
-
----
-
-Would you like me to help with:
-
-- Stripe payment integration frontend + backend next?
-- Admin panel frontend?
-- Deployment instructions or Docker setup?
-
-Let me know!
