@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graphics Packages Gallery with Subscriber Access</title>
+  <link rel="stylesheet" href="style.css" /> </head>
+<body>
+    <h1>Premium Graphics Packages</h1>
+    <div id="user-status-display" style="background: #444; color: #eee; padding: 0.7rem 1.5rem; border-radius: 6px; margin-bottom: 2rem;">
+    Status: Fetching...
+  </div>
+
+  <section class="gallery" aria-label="Graphics packages gallery">
+    <article class="package" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Graphic Package One">
+      <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=600&q=80" alt="Graphic Package One Thumbnail" />
+      <h2>Package One</h2>
+      <p>Abstract glitch art with neon vibes.</p>
+    </article>
+    <article class="package" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Graphic Package Two">
+      <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=600&q=80" alt="Graphic Package Two Thumbnail" />
+      <h2>Package Two</h2>
+      <p>Retro 80s synthwave inspired designs.</p>
+    </article>
+    <article class="package" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Graphic Package Three">
+      <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?auto=format&fit=crop&w=600&q=80" alt="Graphic Package Three Thumbnail" />
+      <h2>Package Three</h2>
+      <p>Cyberpunk cityscapes and neon lights.</p>
+    </article>
+  </section>
+
+    <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" tabindex="-1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Package Title</h2>
+        <button class="modal-close-btn" aria-label="Close popup">&times;</button>
+      </div>
+      <div class="image-container" aria-describedby="modal-desc">
+        <img src="" alt="" />
+      </div>
+      <p class="info-text" id="modal-desc">
+              </p>
+    </div>
+  </div>
+
+    <script src="premium-gallery.js"></script>
+</body>
+</html>
