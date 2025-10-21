@@ -5,12 +5,25 @@ const sequelize = new Sequelize({
   logging: false,
 });
 
+// ... inside server/models.js
+
 // User model
 const User = sequelize.define('User', {
   email: { type: DataTypes.STRING, unique: true, allowNull: false },
   hashedPassword: { type: DataTypes.STRING, allowNull: false },
   stripeCustomerId: { type: DataTypes.STRING },
-  subscriptionStatus: { type: DataTypes.STRING, defaultValue: 'visitor' }
+  subscriptionStatus: { type: DataTypes.STRING, defaultValue: 'visitor' },
+
+  // --- ADD THESE NEW FIELDS ---
+  bio: { type: DataTypes.TEXT, allowNull: true },
+  avatarUrl: { type: DataTypes.STRING, allowNull: true },
+  socialLinks: { type: DataTypes.JSON, allowNull: true }, // e.g. { twitter: '', instagram: '' }
+  theme: { 
+    type: DataTypes.STRING, 
+    allowNull: false, 
+    defaultValue: 'light' 
+  },
+  // -----------------------------
 });
 
 // Order model (from Part 1)
