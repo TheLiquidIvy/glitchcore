@@ -1,0 +1,497 @@
+Got it! I’ll create a complete example HTML page with:
+
+- A gallery of 3 graphic packages (thumbnails).
+- Clicking a thumbnail opens a popup modal showing an enlarged image.
+- The popup initially shows only a zoomed-in partial section of the image for non-subscribers.
+- Subscribers see the full image in the popup.
+- A toggle button to simulate subscription state ("Subscriber" or "Visitor").
+- Non-subscribers can drag the zoomed image portion inside the popup to explore different parts.
+- Subscribers see the full image centered and not draggable.
+
+Here is the full code with detailed comments and accessible markup:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graphics Packages Gallery with Subscriber Access</title>
+  <style>
+    /* Basic reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #181818;
+      color: #eee;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      user-select: none;
+    }
+    h1 {
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    /* Subscription toggle */
+    #subscription-toggle {
+      background: #444;
+      border: none;
+      color: #eee;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    #subscription-toggle.subscriber {
+      background: #0f0;
+      color: #000;
+    }
+    #subscription-toggle:hover {
+      background: #666;
+    }
+
+    /* Gallery grid */
+    .gallery {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 960px;
+      width: 100%;
+    }
+    .package {
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0f0;
+      width: 250px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .package:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 20px #0f0;
+    }
+    .package img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-bottom: 2px solid #0f0;
+      pointer-events: none;
+    }
+    .package h2 {
+      margin: 0.8rem 0 0.4rem;
+      font-size: 1.3rem;
+      color: #0f0;
+      text-align: center;
+    }
+    .package p {
+      margin: 0 1rem 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      text-align: center;
+    }
+
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      user-select: none;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    /* Modal content */
+    .modal-content {
+      background: #111;
+      border-radius: 12px;
+      max-width: 90vw;
+      max-height: 90vh;
+      width: 600px;
+      padding: 1rem;
+      box-shadow: 0 0 20px #0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Modal header */
+    .modal-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .modal-header h2 {
+      color: #0f0;
+      margin: 0;
+    }
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      color: #0f0;
+      cursor: pointer;
+      font-weight: 700;
+      user-select: none;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.3s ease;
+    }
+    .modal-close-btn:hover,
+    .modal-close-btn:focus {
+      color: #0ff;
+      outline: none;
+    }
+
+    /* Image container with fixed size */
+    .image-container {
+      background: #222;
+      width: 100%;
+      height: 400px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 0 25px #0f0;
+      cursor: grab;
+    }
+    .image-container:active {
+      cursor: grabbing;
+    }
+
+    /* Enlarged image */
+    .image-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      user-select: none;
+      -webkit-user-drag: none;
+      max-width: none; /* disable auto scaling */
+      max-height: none;
+      will-change: transform;
+      /* We'll control transform in JS */
+    }
+
+    /* Info text */
+    .info-text {
+      margin-top: 1rem;
+      color: #0f0;
+      font-size: 0.95rem;
+      text-align: center;
+      font-style: italic;
+      user-select: text;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .modal-content {
+        width: 90vw;
+        height: auto;
+      }
+      .image-container {
+        height: 300px;
+      }
+      .package {
+        width: 90vw;
+        max-width: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Graphics Packages Gallery</h1>
+  <button id="subscription-toggle" aria-pressed="false" aria-label="Toggle subscription status">
+    You are a Visitor (Click to become Subscriber)
+  </button>
+
+  <section class="gallery" aria-label="Graphics packages gallery">
+    <article class="package" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Graphic Package One">
+      <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=600&q=80" alt="Graphic Package One Thumbnail" />
+      <h2>Package One</h2>
+      <p>Abstract glitch art with neon vibes.</p>
+    </article>
+    <article class="package" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Graphic Package Two">
+      <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=600&q=80" alt="Graphic Package Two Thumbnail" />
+      <h2>Package Two</h2>
+      <p>Retro 80s synthwave inspired designs.</p>
+    </article>
+    <article class="package" tabindex="0" role="button" aria-haspopup="dialog" aria-label="View Graphic Package Three">
+      <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?auto=format&fit=crop&w=600&q=80" alt="Graphic Package Three Thumbnail" />
+      <h2>Package Three</h2>
+      <p>Cyberpunk cityscapes and neon lights.</p>
+    </article>
+  </section>
+
+  <!-- Modal popup -->
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" tabindex="-1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Package Title</h2>
+        <button class="modal-close-btn" aria-label="Close popup">&times;</button>
+      </div>
+      <div class="image-container" aria-describedby="modal-desc">
+        <img src="" alt="" />
+      </div>
+      <p class="info-text" id="modal-desc">
+        <!-- Info text changes dynamically -->
+      </p>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const subscriptionToggle = document.getElementById('subscription-toggle');
+      let isSubscriber = false;
+      const modalOverlay = document.querySelector('.modal-overlay');
+      const modalContent = modalOverlay.querySelector('.modal-content');
+      const modalCloseBtn = modalOverlay.querySelector('.modal-close-btn');
+      const modalTitle = modalOverlay.querySelector('#modal-title');
+      const modalDesc = modalOverlay.querySelector('#modal-desc');
+      const imageContainer = modalOverlay.querySelector('.image-container');
+      const modalImage = imageContainer.querySelector('img');
+
+      // Gallery package data - mirroring the thumbnails
+      const packages = [
+        {
+          title: "Package One",
+          description: "Abstract glitch art with neon vibes.",
+          thumb: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=600&q=80",
+          fullImage: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1200&q=90"
+        },
+        {
+          title: "Package Two",
+          description: "Retro 80s synthwave inspired designs.",
+          thumb: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=600&q=80",
+          fullImage: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=90"
+        },
+        {
+          title: "Package Three",
+          description: "Cyberpunk cityscapes and neon lights.",
+          thumb: "https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?auto=format&fit=crop&w=600&q=80",
+          fullImage: "https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?auto=format&fit=crop&w=1200&q=90"
+        }
+      ];
+
+      // Update subscription toggle button text and style
+      function updateSubscriptionUI() {
+        if (isSubscriber) {
+          subscriptionToggle.textContent = 'You are a Subscriber (Click to become Visitor)';
+          subscriptionToggle.classList.add('subscriber');
+          subscriptionToggle.setAttribute('aria-pressed', 'true');
+        } else {
+          subscriptionToggle.textContent = 'You are a Visitor (Click to become Subscriber)';
+          subscriptionToggle.classList.remove('subscriber');
+          subscriptionToggle.setAttribute('aria-pressed', 'false');
+        }
+      }
+
+      subscriptionToggle.addEventListener('click', () => {
+        isSubscriber = !isSubscriber;
+        updateSubscriptionUI();
+      });
+
+      updateSubscriptionUI();
+
+      // Helper function to get package index from event target
+      function getPackageIndexFromElement(elem) {
+        const packagesEls = [...document.querySelectorAll('.package')];
+        return packagesEls.indexOf(elem);
+      }
+
+      // Open modal with package info
+      function openModal(pkgIndex) {
+        const pkg = packages[pkgIndex];
+        modalTitle.textContent = pkg.title;
+        modalDesc.textContent = pkg.description;
+        modalImage.src = '';
+        modalImage.alt = `${pkg.title} full graphic preview`;
+
+        // Reset imageContainer scroll and position
+        imageContainer.scrollTop = 0;
+        imageContainer.scrollLeft = 0;
+        modalImage.style.transform = '';
+        modalImage.style.top = '0px';
+        modalImage.style.left = '0px';
+
+        // Load full image
+        modalImage.src = pkg.fullImage;
+
+        // On image load, set up view depending on subscription
+        modalImage.onload = () => {
+          if (isSubscriber) {
+            // Subscriber: show full image centered
+            modalImage.style.position = 'relative';
+            modalImage.style.top = '0';
+            modalImage.style.left = '0';
+            modalImage.style.cursor = 'default';
+            modalImage.style.transform = 'none';
+            enableDrag(false);
+            modalImage.style.width = '100%';
+            modalImage.style.height = 'auto';
+          } else {
+            // Visitor: show zoomed partial section, draggable
+            modalImage.style.position = 'absolute';
+            modalImage.style.width = modalImage.naturalWidth + 'px';
+            modalImage.style.height = modalImage.naturalHeight + 'px';
+
+            // Show zoomed in portion (e.g. 2x zoom)
+            const zoom = 2;
+            modalImage.style.width = (modalImage.naturalWidth * zoom) + 'px';
+            modalImage.style.height = (modalImage.naturalHeight * zoom) + 'px';
+
+            // Position image to show top-left corner portion initially
+            modalImage.style.top = '0px';
+            modalImage.style.left = '0px';
+
+            enableDrag(true);
+          }
+          modalOverlay.classList.add('active');
+          // Focus modal for accessibility
+          modalCloseBtn.focus();
+        };
+      }
+
+      // Close modal function
+      function closeModal() {
+        modalOverlay.classList.remove('active');
+        modalImage.src = '';
+      }
+
+      // Setup dragging for modalImage inside imageContainer for visitors
+      let dragState = {
+        active: false,
+        startX: 0,
+        startY: 0,
+        imgStartLeft: 0,
+        imgStartTop: 0
+      };
+
+      function enableDrag(enable) {
+        if (enable) {
+          modalImage.style.cursor = 'grab';
+          modalImage.addEventListener('pointerdown', dragStart);
+          window.addEventListener('pointerup', dragEnd);
+          window.addEventListener('pointermove', dragMove);
+        } else {
+          modalImage.style.cursor = 'default';
+          modalImage.removeEventListener('pointerdown', dragStart);
+          window.removeEventListener('pointerup', dragEnd);
+          window.removeEventListener('pointermove', dragMove);
+        }
+      }
+
+      function dragStart(e) {
+        e.preventDefault();
+        dragState.active = true;
+        dragState.startX = e.clientX;
+        dragState.startY = e.clientY;
+        dragState.imgStartLeft = parseInt(modalImage.style.left) || 0;
+        dragState.imgStartTop = parseInt(modalImage.style.top) || 0;
+        modalImage.style.cursor = 'grabbing';
+      }
+
+      function dragEnd(e) {
+        if (!dragState.active) return;
+        dragState.active = false;
+        modalImage.style.cursor = 'grab';
+      }
+
+      function dragMove(e) {
+        if (!dragState.active) return;
+        e.preventDefault();
+
+        const dx = e.clientX - dragState.startX;
+        const dy = e.clientY - dragState.startY;
+
+        let newLeft = dragState.imgStartLeft + dx;
+        let newTop = dragState.imgStartTop + dy;
+
+        // Boundaries so image doesn't move outside container
+        const containerRect = imageContainer.getBoundingClientRect();
+        const imgRect = modalImage.getBoundingClientRect();
+
+        // Calculate max/min left and top
+        const maxLeft = 0;
+        const maxTop = 0;
+        const minLeft = containerRect.width - imgRect.width;
+        const minTop = containerRect.height - imgRect.height;
+
+        if (newLeft > maxLeft) newLeft = maxLeft;
+        if (newLeft < minLeft) newLeft = minLeft;
+        if (newTop > maxTop) newTop = maxTop;
+        if (newTop < minTop) newTop = minTop;
+
+        modalImage.style.left = newLeft + 'px';
+        modalImage.style.top = newTop + 'px';
+      }
+
+      // Event listeners for gallery packages
+      const packageElements = document.querySelectorAll('.package');
+      packageElements.forEach((elem, index) => {
+        // Click or enter key opens modal
+        elem.addEventListener('click', () => openModal(index));
+        elem.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal(index);
+          }
+        });
+      });
+
+      // Close modal on close button click
+      modalCloseBtn.addEventListener('click', closeModal);
+
+      // Close modal on overlay click (but not on modal content)
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+      });
+
+      // Close modal on Escape key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+          closeModal();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+```
+
+---
+
+### How to use this:
+
+- Open the page in a modern browser.
+- Click the "You are a Visitor" button to toggle subscription status.
+- Visitors see only a zoomed-in portion of the enlarged image and can drag around inside the popup.
+- Subscribers see the full image centered and cannot drag it.
+- Click any package thumbnail to open the popup.
+- Close the popup by clicking the × button, clicking outside the modal content, or pressing Escape.
+- Use keyboard navigation (Tab + Enter/Space) to open packages for accessibility.
+
+---
+
+This demo uses Unsplash images for graphic package visuals. You can replace URLs with your own graphics.
+
+Would you like me to add more features or explanations?
