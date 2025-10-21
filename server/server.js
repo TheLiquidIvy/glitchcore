@@ -31,7 +31,15 @@ app.get('/api/profile', require('./middleware/authenticateToken'), async (req, r
   });
   if (!user) return res.sendStatus(404);
   res.json(user);
-});
+  // ... inside server/server.js
+
+// ... (other route imports)
+const blogRoutes = require('./routes/blog');
+const userRoutes = require('./routes/user'); // <-- ADD THIS
+
+// ... (app.use for other routes) ...
+app.use('/api/blog', blogRoutes);
+app.use('/api/users', userRoutes); // <-- ADD THIS
 
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/podDrafts', podDraftRoutes);
