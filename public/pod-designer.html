@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Glitchcore Print-on-Demand with Export</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="pod-designer.css"/>
+  <style>
+  </style>
+</head>
+<body>
+  <h1 class="glitch" data-text="Print-on-Demand">Print-on-Demand</h1>
+
+  <div class="products">
+    <!-- T-shirt product -->
+    <section class="product" aria-label="Customize T-Shirt">
+      <h2>T-Shirt</h2>
+      <label for="upload-tshirt" class="upload-label" tabindex="0">Upload Design</label>
+      <input type="file" accept="image/*" id="upload-tshirt" aria-describedby="tshirt-desc" />
+      <div class="preview-container" id="tshirt-preview" aria-live="polite" aria-atomic="true" aria-describedby="tshirt-desc">
+        <img src="https://i.imgur.com/5Ff1JxJ.png" alt="T-shirt blank mockup" class="product-base" />
+        <!-- User design image will be inserted here -->
+      </div>
+      <div class="controls" aria-label="Design controls for T-shirt">
+        <button class="btn-control" id="tshirt-scale-down" aria-label="Scale design smaller">Scale -</button>
+        <button class="btn-control" id="tshirt-scale-up" aria-label="Scale design larger">Scale +</button>
+        <button class="btn-control" id="tshirt-rotate-left" aria-label="Rotate design left">Rotate ⟲</button>
+        <button class="btn-control" id="tshirt-rotate-right" aria-label="Rotate design right">Rotate ⟳</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-download" id="tshirt-download" aria-label="Download preview image of T-shirt design">Download Preview</button>
+        <button class="btn-add-cart" id="tshirt-add-cart" aria-label="Add customized T-Shirt to cart">Add to Cart</button>
+      </div>
+      <p id="tshirt-desc" class="desc-text">
+        Upload your design and adjust its position, size, and rotation on the t-shirt.
+      </p>
+    </section>
+
+    <!-- Sneaker product -->
+    <section class="product" aria-label="Customize Sneaker">
+      <h2>Sneaker</h2>
+      <label for="upload-sneaker" class="upload-label" tabindex="0">Upload Design</label>
+      <input type="file" accept="image/*" id="upload-sneaker" aria-describedby="sneaker-desc" />
+      <div class="preview-container" id="sneaker-preview" aria-live="polite" aria-atomic="true" aria-describedby="sneaker-desc">
+        <img src="https://i.imgur.com/gQZq7qV.png" alt="Sneaker blank mockup" class="product-base" />
+        <!-- User design image will be inserted here -->
+      </div>
+      <div class="controls" aria-label="Design controls for Sneaker">
+        <button class="btn-control" id="sneaker-scale-down" aria-label="Scale design smaller">Scale -</button>
+        <button class="btn-control" id="sneaker-scale-up" aria-label="Scale design larger">Scale +</button>
+        <button class="btn-control" id="sneaker-rotate-left" aria-label="Rotate design left">Rotate ⟲</button>
+        <button class="btn-control" id="sneaker-rotate-right" aria-label="Rotate design right">Rotate ⟳</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-download" id="sneaker-download" aria-label="Download preview image of Sneaker design">Download Preview</button>
+        <button class="btn-add-cart" id="sneaker-add-cart" aria-label="Add customized Sneaker to cart">Add to Cart</button>
+      </div>
+      <p id="sneaker-desc" class="desc-text">
+        Upload your design and adjust its position, size, and rotation on the sneaker.
+      </p>
+    </section>
+  </div>
+</body>
+</html>
