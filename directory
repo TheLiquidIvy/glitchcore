@@ -1,0 +1,29 @@
+/glitchcore-project
+├── public/                 <-- Your static HTML files go here
+│   ├── index.html          <-- (Snipcart E-commerce Home)
+│   ├── gallery-public.html <-- (Public Gallery/Lightbox)
+│   ├── gallery-premium.html<-- (Subscriber Gallery/Zoom)
+│   ├── style.css
+│   └── premium-gallery.js
+|
+├── server/                 <-- Node.js Backend
+│   ├── config.js
+│   ├── models.js           <-- Sequelize DB models
+│   ├── server.js           <-- Express App Entry Point
+│   ├── package.json
+│   ├── middleware/
+│   │   └── authenticateToken.js
+│   └── routes/
+│       ├── admin.js
+│       ├── auth.js         <-- Login/Register
+│       ├── dashboard.js
+│       └── podDrafts.js    <-- CRUD API
+|
+└── client/                 <-- React Frontend
+    ├── src/
+    │   ├── App.js          <-- Main Auth Flow
+    │   ├── index.js        <-- React Entry Point
+    │   └── components/
+    │       ├── Dashboard.js
+    │       └── PodDraftsManager.js
+    └── package.json
