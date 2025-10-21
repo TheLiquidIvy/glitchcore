@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Glitchcore Cyberpunk Ecommerce Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.css" />
+  <link rel="stylesheet" href="style.css" />  </head><body>
+  <header>
+    <div class="logo" aria-label="Glitchcore Cyberpunk Store Logo" role="banner">GL!TCHCORE</div>
+    <nav role="navigation" aria-label="Primary Navigation">
+      <ul>
+        <li><a href="#featured" tabindex="0">Featured</a></li>
+        <li><a href="#products" tabindex="0">Products</a></li>
+        <li><a href="#contact" tabindex="0">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="featured" class="featured-product" aria-labelledby="featured-title">
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80" alt="Cyberpunk Neon Headphones" />
+      <div class="featured-info">
+        <h2 id="featured-title" class="glitch" data-text="Neon Headphones">Neon Headphones</h2>
+        <p>Experience the future of sound with these glitchcore neon headphones. Perfect for late-night beats and cyberpunk vibes.</p>
+        <div class="price">$149.99</div>
+        <button 
+          class="snipcart-add-item btn-buy" 
+          data-item-id="neon-headphones" 
+          data-item-name="Neon Headphones" 
+          data-item-price="149.99" 
+          data-item-url="https://yourdomain.com" 
+          data-item-description="Experience the future of sound with these glitchcore neon headphones."
+          aria-label="Buy Neon Headphones">
+          Buy Now
+        </button>
+      </div>
+    </section>
+
+    <section id="products" aria-labelledby="products-title">
+      <h2 id="products-title" class="glitch" data-text="Products">Products</h2>
+      <div class="product-grid">
+        <article class="product-card" tabindex="0" aria-label="Cybernetic Jacket, $299.99">
+          <img src="https://images.unsplash.com/photo-1520975690543-6f0a5a5acb4e?auto=format&fit=crop&w=400&q=80" alt="Cybernetic Jacket" />
+          <h3>Cybernetic Jacket</h3>
+          <div class="price">$299.99</div>
+          <button 
+            class="snipcart-add-item" 
+            data-item-id="cybernetic-jacket" 
+            data-item-name="Cybernetic Jacket" 
+            data-item-price="299.99" 
+            data-item-url="https://yourdomain.com" 
+            data-item-description="High-tech cybernetic jacket with neon trims."
+            aria-label="Add Cybernetic Jacket to cart">
+            Add to Cart
+          </button>
+        </article>
+        <article class="product-card" tabindex="0" aria-label="Holo Visor, $89.99">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Holo Visor" />
+          <h3>Holo Visor</h3>
+          <div class="price">$89.99</div>
+          <button 
+            class="snipcart-add-item" 
+            data-item-id="holo-visor" 
+            data-item-name="Holo Visor" 
+            data-item-price="89.99" 
+            data-item-url="https://yourdomain.com" 
+            data-item-description="Futuristic holographic visor for augmented reality."
+            aria-label="Add Holo Visor to cart">
+            Add to Cart
+          </button>
+        </article>
+        <article class="product-card" tabindex="0" aria-label="Pixelated Sneakers, $129.99">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80" alt="Pixelated Sneakers" />
+          <h3>Pixelated Sneakers</h3>
+          <div class="price">$129.99</div>
+          <button 
+            class="snipcart-add-item" 
+            data-item-id="pixelated-sneakers" 
+            data-item-name="Pixelated Sneakers" 
+            data-item-price="129.99" 
+            data-item-url="https://yourdomain.com" 
+            data-item-description="Retro pixel art style sneakers with glowing soles."
+            aria-label="Add Pixelated Sneakers to cart">
+            Add to Cart
+          </button>
+        </article>
+        <article class="product-card" tabindex="0" aria-label="Glitch Mask, $59.99">
+          <img src="https://images.unsplash.com/photo-1518173946687-a4c8895d9e9d?auto=format&fit=crop&w=400&q=80" alt="Glitch Mask" />
+          <h3>Glitch Mask</h3>
+          <div class="price">$59.99</div>
+          <button 
+            class="snipcart-add-item" 
+            data-item-id="glitch-mask" 
+            data-item-name="Glitch Mask" 
+            data-item-price="59.99" 
+            data-item-url="https://yourdomain.com" 
+            data-item-description="Mask with glitch effect for cyberpunk cosplay."
+            aria-label="Add Glitch Mask to cart">
+            Add to Cart
+          </button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" role="contentinfo" aria-label="Contact Information">
+    <p>© 2024 Glitchcore Cyberpunk Store. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:support@glitchcore.store">support@glitchcore.store</a></p>
+  </footer>
+
+  <!-- Floating Cart Button -->
+  <button class="snipcart-checkout" aria-label="Open Shopping Cart">Cart</button>
+
+  <script src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js"></script>
+  <div hidden id="snipcart" data-api-key="YOUR_PUBLIC_API_KEY"></div>
+</body>
+</html>
