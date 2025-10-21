@@ -11,6 +11,17 @@ const podDraftRoutes = require('./routes/podDrafts');
 const adminRoutes = require('./routes/admin');
 const blogRoutes = require('./routes/blog'); // <-- ADD THIS
 
+// ... inside server/server.js
+// ... (other route imports)
+const userRoutes = require('./routes/user');
+const forumRoutes = require('./routes/forum'); // <-- ADD THIS
+
+// ... (app.use for other routes) ...
+app.use('/api/users', userRoutes);
+app.use('/api/forum', forumRoutes); // <-- ADD THIS
+
+// ... (rest of the file)
+
 const app = express();
 app.use(cors());
 
