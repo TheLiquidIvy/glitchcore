@@ -1,4 +1,14 @@
-// server/package.json
+{
+{
+  "scripts": {
+    "start": "node server.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:ci": "NODE_ENV=test npx sequelize-cli db:migrate", // 💥 ADD THIS LINE 💥
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  // ... rest of your package.json
+}
+
 {
   "name": "glitchcore-api",
   "version": "1.0.0",
