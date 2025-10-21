@@ -14,6 +14,62 @@ import Blog from './components/Blog';
 import BlogPostDetail from './components/BlogPostDetail';
 import BlogAdmin from './components/BlogAdmin'; // Your admin panel
 
+// ... (other imports)
+import BlogAdmin from './components/BlogAdmin';
+import UserProfile from './components/UserProfile'; // <-- ADD THIS
+
+function App() {
+  // ... (useState, logout function)
+
+  return (
+    <Router>
+      <header style={headerStyle}>
+        {/* ... (nav content) ... */}
+        {token ? (
+            <>
+              <Link to="/dashboard" style={linkStyle}>Dashboard</Link> |{' '}
+              <Link to="/profile" style={linkStyle}>Profile</Link> | {/* <-- ADD THIS LINK */}
+              <Link to="/forum" style={linkStyle}>Forum</Link> | {/* <-- ADD THIS LINK */}
+              <Link to="/admin/blog" style={linkStyle}>Blog Admin</Link> |{' '}
+              <button onClick={logout} style={buttonStyle}>Logout</button>
+            </>
+          ) : (
+        // ... (login link)
+        )}
+      </header>
+
+      <main style={{ padding: '20px' }}>
+        <Routes>
+          {/* ... (public routes: /, /about, /blog, /blog/:slug) ... */}
+          {/* ... (auth route: /login) ... */}
+
+          {/* ... (protected route: /dashboard) ... */}
+          {/* ... (protected route: /admin/blog) ... */}
+          
+          {/* --- ADD THESE NEW ROUTES --- */}
+          <Route path="/profile" element={token ? (
+             <UserProfile token={token} />
+          ) : (
+            <Navigate to="/login" />
+          )} />
+          
+          <Route path="/forum" element={token ? (
+             <ForumApp token={token} /> {/* <-- We will add ForumApp next */}
+          ) : (
+            <Navigate to="/login" />
+          )} />
+          {/* --------------------------- */}
+          
+        </Routes>
+      </main>
+
+      {/* ... (footer) ... */}
+    </Router>
+  );
+}
+
+// ... (styles) ...
+export default App;
 // This is a helper component to handle the login/register view switching
 function AuthPage({ setToken }) {
   const [view, setView] = useState('login'); // 'login' or 'register'
