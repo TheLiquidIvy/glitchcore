@@ -23,7 +23,69 @@ const User = sequelize.define('User', {
     allowNull: false, 
     defaultValue: 'light' 
   },
-  // -----------------------------
+
+  // ... inside server/models.js
+// ... (after User, Order, PodDraft, Recommendation, Image, BlogPost models) ...
+
+// --- NEW FORUM MODELS ---
+
+const ForumCategory = sequelize.define('ForumCategory', {
+  name: { type: DataTypes.STRING, allowNull: false, unique: true },
+  description: { type: DataTypes.TEXT, allowNull: true },
+});
+
+const Topic = sequelize.define('Topic', {
+  title: { type: DataTypes.STRING, allowNull: false },
+  // Foreign keys (userId, categoryId) will be added by associations
+});
+
+const Post = sequelize.define('Post', {
+  content: { type: DataTypes.TEXT, allowNull: false },
+  // Foreign keys (userId, topicId) will be added by associations
+});
+
+// ----------------------------
+
+// --- RELATIONSHIPS ---
+// (Existing relationships)
+User.hasMany(Order, { foreignKey: 'userId' });
+User.hasMany(PodDraft, { foreignKey: 'userId' });
+User.hasMany(Recommendation, { foreignKey: 'userId' });
+// ... (add User.hasMany(BlogPost) if you want)
+
+// (New Forum relationships)
+// User <-> Topic/Post
+User.hasMany(Topic, { foreignKey: 'userId' });
+Topic.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(Post, { foreignKey: 'userId' });
+Post.belongsTo(User, { foreignKey: 'userId' });
+
+// Category <-> Topic
+ForumCategory.hasMany(Topic, { foreignKey: 'categoryId' });
+Topic.belongsTo(ForumCategory, { foreignKey: 'categoryId' });
+
+// Topic <-> Post
+Topic.hasMany(Post, { foreignKey: 'topicId' });
+Post.belongsTo(Topic, { foreignKey: 'topicId' });
+// ----------------------------
+
+
+module.exports = { 
+  sequelize, 
+  User, 
+  Order, 
+  PodDraft, 
+  Recommendation, 
+  Image, 
+  BlogPost,
+  // --- ADD THESE ---
+  ForumCategory,
+  Topic,
+  Post,
+  // -----------------
+  Op 
+};
 });
 
 // Order model (from Part 1)
