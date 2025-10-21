@@ -1,4 +1,3 @@
-// server/models.js
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -45,9 +44,31 @@ const Image = sequelize.define('Image', {
   title: { type: DataTypes.STRING }
 });
 
+// --- NEW BLOG POST MODEL ---
+const BlogPost = sequelize.define('BlogPost', {
+  title: { type: DataTypes.STRING, allowNull: false },
+  category: { type: DataTypes.STRING, allowNull: false },
+  content: { type: DataTypes.TEXT, allowNull: false },
+  excerpt: { type: DataTypes.TEXT, allowNull: true },
+  featuredImage: { type: DataTypes.STRING, allowNull: true },
+  slug: { type: DataTypes.STRING, allowNull: false, unique: true },
+  publishedAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+});
+// ----------------------------
+
 // Relationships
 User.hasMany(Order, { foreignKey: 'userId' });
 User.hasMany(PodDraft, { foreignKey: 'userId' });
 User.hasMany(Recommendation, { foreignKey: 'userId' });
+// Add any new relationships if needed, e.g., User.hasMany(BlogPost)
 
-module.exports = { sequelize, User, Order, PodDraft, Recommendation, Image, Op };
+module.exports = { 
+  sequelize, 
+  User, 
+  Order, 
+  PodDraft, 
+  Recommendation, 
+  Image, 
+  BlogPost, // <-- Add BlogPost here
+  Op 
+};
