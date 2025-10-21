@@ -1,34 +1,25 @@
-Great! Let's walk through a simplified example of how you could design backend APIs and integrate Stripe webhooks to manage subscription status, plus how the frontend would fetch and use that status.
+// 1. Backend API Design for Subscription Status
 
----
-
-## 1. Backend API Design for Subscription Status
-
-Assuming you have user accounts with unique IDs, your backend would expose endpoints like:
-
-### a) User Login (returns auth token)
+// a) User Login (returns auth token)
 ```http
 POST /api/login
 Body: { "email": "...", "password": "..." }
 Response: { "token": "jwt-token", "user": { "id": "123", "email": "...", "subscriptionStatus": "subscriber" } }
 ```
 
-### b) Get Current User Profile
+// b) Get Current User Profile
 ```http
 GET /api/profile
 Headers: Authorization: Bearer jwt-token
 Response: { "id": "123", "email": "...", "subscriptionStatus": "subscriber" }
 ```
 
-The `subscriptionStatus` could be `"subscriber"` or `"visitor"`.
+//The `subscriptionStatus` could be `"subscriber"` or `"visitor"`.
 
----
-
-## 2. Stripe Webhook Handling (Node.js example)
+// 2. Stripe Webhook Handling (Node.js example)
 
 Stripe sends webhook events when subscriptions are created, updated, or canceled.
 
-```javascript
 const express = require('express');
 const bodyParser = require('body-parser');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -96,15 +87,11 @@ async function findUserByStripeCustomerId(customerId) {
 async function updateUserSubscriptionStatus(userId, status) {
   // Update user subscription status in DB
 }
-```
 
----
-
-## 3. Frontend Fetching and Using Subscription Status
+// 3. Frontend Fetching and Using Subscription Status
 
 After user login or page load, your frontend fetches `/api/profile` to get the current user's subscription status:
 
-```javascript
 async function fetchUserProfile() {
   const token = localStorage.getItem('authToken'); // or cookie
   if (!token) return null;
@@ -133,25 +120,3 @@ fetchUserProfile().then(user => {
   }
 });
 ```
-
-Here, `enableSubscriberFeatures()` and `enableVisitorFeatures()` would toggle UI accordingly (like showing full images or partial zoom).
-
----
-
-## Summary Workflow
-
-1. User signs up and pays subscription via Stripe Checkout or Portal.
-2. Stripe sends webhook events to your backend.
-3. Backend updates user’s subscription status accordingly.
-4. User logs in; frontend fetches user profile including subscription status.
-5. Frontend renders UI/features based on status, unlocking full image views for subscribers.
-
----
-
-If you want, I can help you with:
-
-- A sample backend user model schema including subscription info.
-- A minimal Node.js/Express user login + profile API example.
-- Frontend integration example using fetch or a framework like React.
-
-Would you like me to prepare one of those?
