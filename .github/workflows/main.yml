@@ -1,0 +1,54 @@
+name: Node.js CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+jobs:
+  build:
+    # Use a standard, clean runner environment
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out code from the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js 20.x
+      - name: Set up Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm' # Speeds up subsequent runs by caching node_modules
+
+      # 3. Install Backend Dependencies (Root package.json)
+      - name: Install Backend Dependencies
+        run: npm install
+        working-directory: ./
+
+      # 4. Install Frontend Dependencies (Client package.json)
+      - name: Install Frontend Dependencies
+        run: npm install
+        working-directory: ./client
+
+      # 5. Run Database Migrations 💾
+      # This is the crucial step that replaces your manual 'npx sequelize-cli db:migrate'
+      - name: Migrate Database Schema
+        run: npx sequelize-cli db:migrate
+        # Note: You may need to set environment variables for your database connection
+        # if they aren't configured in a file like .sequelizerc
+        env:
+          # Example of setting DB environment variable (adjust as necessary)
+          DATABASE_URL: ${{ secrets.DATABASE_URL_CI }} 
+          # You will need to store the actual CI database URL in GitHub Secrets
+
+      # 6. Build Frontend (React) 📦
+      - name: Build Frontend for Production
+        run: npm run build
+        working-directory: ./client
+      
+      # (Optional) 7. Run Tests - Uncomment if you have 'npm test' configured
+      # - name: Run Tests
+      #   run: npm test
