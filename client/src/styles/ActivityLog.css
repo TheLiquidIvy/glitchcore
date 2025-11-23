@@ -1,0 +1,88 @@
+.activity-log {
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(255, 0, 110, 0.05));
+  border: 2px solid var(--tertiary-neon);
+  border-radius: 15px;
+}
+
+.activity-log h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.log-subtitle {
+  color: var(--tertiary-neon);
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.log-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid var(--tertiary-neon);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.log-entry:hover {
+  border-color: var(--primary-neon);
+  background: rgba(0, 255, 136, 0.08);
+}
+
+.log-entry.current {
+  border: 2px solid var(--secondary-neon);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(255, 190, 11, 0.1));
+  box-shadow: 0 0 15px var(--secondary-neon);
+}
+
+.log-icon {
+  font-size: 1.5rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+.log-content {
+  flex: 1;
+}
+
+.log-user {
+  color: var(--primary-neon);
+  margin: 0;
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--primary-neon);
+}
+
+.log-action {
+  color: var(--text-secondary);
+  margin: 0.25rem 0 0 0;
+  font-size: 0.95rem;
+}
+
+.log-time {
+  color: var(--accent-neon);
+  font-weight: bold;
+  min-width: 60px;
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+.log-entry.current .log-time {
+  color: var(--secondary-neon);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

@@ -1,0 +1,159 @@
+.flash-sale {
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(0, 255, 136, 0.1));
+  border: 3px solid var(--secondary-neon);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 0 30px var(--secondary-neon);
+  animation: flash-glow 1s ease-in-out infinite;
+}
+
+@keyframes flash-glow {
+  0%, 100% { box-shadow: 0 0 30px var(--secondary-neon); }
+  50% { box-shadow: 0 0 50px var(--secondary-neon); }
+}
+
+.flash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.flash-header h2 {
+  font-size: 2rem;
+  margin: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.countdown-label {
+  color: var(--accent-neon);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.timer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--secondary-neon);
+  border-radius: 8px;
+  font-family: monospace;
+}
+
+.time-unit {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--secondary-neon);
+  text-shadow: 0 0 10px var(--secondary-neon);
+  min-width: 50px;
+  text-align: center;
+}
+
+.separator {
+  color: var(--secondary-neon);
+  font-weight: bold;
+}
+
+.sale-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.sale-card {
+  position: relative;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(255, 0, 110, 0.08));
+  border: 2px solid var(--primary-neon);
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.sale-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px var(--primary-neon);
+}
+
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, var(--secondary-neon), var(--accent-neon));
+  color: var(--darker-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.stock-counter {
+  color: var(--secondary-neon);
+  font-weight: bold;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px var(--secondary-neon);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.sale-product-name {
+  font-size: 1.3rem;
+  color: var(--primary-neon);
+  margin: 1rem 0;
+  text-shadow: 0 0 10px var(--primary-neon);
+}
+
+.price-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+.sale-price {
+  font-size: 1.8rem;
+  color: var(--accent-neon);
+  font-weight: bold;
+  text-shadow: 0 0 10px var(--accent-neon);
+}
+
+.savings {
+  color: var(--primary-neon);
+  font-size: 0.9rem;
+}
+
+.sale-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--secondary-neon), var(--accent-neon));
+  border: 2px solid var(--secondary-neon);
+  color: var(--darker-bg);
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+}
+
+.sale-btn:hover {
+  box-shadow: 0 0 20px var(--secondary-neon);
+  transform: scale(1.05);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

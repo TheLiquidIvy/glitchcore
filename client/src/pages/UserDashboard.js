@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AnimatedCounter from '../components/AnimatedCounter';
 import ProductRecommendations from '../components/ProductRecommendations';
+import OrderTracking from '../components/OrderTracking';
 import '../styles/Dashboard.css';
 
 function UserDashboard({ user, onNavigate, onLogout, cartCount }) {
@@ -102,6 +103,9 @@ function UserDashboard({ user, onNavigate, onLogout, cartCount }) {
             <button className="action-btn" onClick={() => onNavigate('products')}>
               🛍️ BROWSE PRODUCTS
             </button>
+            <button className="action-btn" onClick={() => onNavigate('wishlist')}>
+              💝 VIEW WISHLIST
+            </button>
             <button className="action-btn" onClick={() => onNavigate('contact')}>
               💬 CONTACT SUPPORT
             </button>
@@ -109,6 +113,11 @@ function UserDashboard({ user, onNavigate, onLogout, cartCount }) {
               🚪 LOGOUT
             </button>
           </div>
+        </section>
+
+        {/* Order Tracking */}
+        <section className="dashboard-card">
+          <OrderTracking />
         </section>
       </div>
 

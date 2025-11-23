@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Cart.css';
+import PromoCode from '../components/PromoCode';
 
 function Cart({ onNavigate, cartItems = [] }) {
+  const [discountRate, setDiscountRate] = useState(0);
+  
   const mockCartItems = [
     { id: 1, name: 'Neon Headphones', price: 149.99, quantity: 1, image: '🎧' },
     { id: 4, name: 'Pixelated Sneakers', price: 129.99, quantity: 2, image: '👟' },
@@ -9,8 +12,10 @@ function Cart({ onNavigate, cartItems = [] }) {
 
   const items = cartItems.length > 0 ? cartItems : mockCartItems;
   const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const tax = subtotal * 0.1;
-  const total = subtotal + tax;
+  const discount = subtotal * discountRate;
+  const afterDiscount = subtotal - discount;
+  const tax = afterDiscount * 0.1;
+  const total = afterDiscount + tax;
 
   return (
     <div className="cart-page">
@@ -50,10 +55,19 @@ function Cart({ onNavigate, cartItems = [] }) {
 
         <div className="cart-summary">
           <h2 className="glitch" data-text="ORDER SUMMARY">ORDER SUMMARY</h2>
+          
+          <PromoCode subtotal={subtotal} onApplyCode={setDiscountRate} />
+
           <div className="summary-row">
             <span>SUBTOTAL</span>
             <span>${subtotal.toFixed(2)}</span>
           </div>
+          {discount > 0 && (
+            <div className="summary-row discount">
+              <span>DISCOUNT ({Math.round(discountRate * 100)}%)</span>
+              <span>-${discount.toFixed(2)}</span>
+            </div>
+          )}
           <div className="summary-row">
             <span>TAX (10%)</span>
             <span>${tax.toFixed(2)}</span>

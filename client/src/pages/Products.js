@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
 import '../styles/Products.css';
+import AdvancedSearch from '../components/AdvancedSearch';
+import StockWarning from '../components/StockWarning';
 
 const PRODUCTS_DATA = [
   { id: 1, name: 'Neon Headphones', price: 149.99, category: 'Audio', emoji: '🎧' },
@@ -51,6 +53,8 @@ function Products({ onNavigate, onProductClick }) {
         placeholder="Search cyberpunk gear..."
       />
 
+      <AdvancedSearch onSearch={() => {}} />
+
       <div className="products-controls">
         <div className="filter-section">
           <h3>CATEGORIES</h3>
@@ -88,6 +92,7 @@ function Products({ onNavigate, onProductClick }) {
             <h3>{product.name}</h3>
             <p className="product-price price-glitch">${product.price.toFixed(2)}</p>
             <p className="product-category">{product.category}</p>
+            <StockWarning stock={Math.floor(Math.random() * 15)} />
             <div className="product-actions">
               <button 
                 className="view-btn"

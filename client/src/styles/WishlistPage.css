@@ -1,0 +1,167 @@
+.wishlist-page {
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.back-button {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 2px solid var(--tertiary-neon);
+  color: var(--tertiary-neon);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Orbitron', monospace;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: rgba(0, 217, 255, 0.2);
+  box-shadow: 0 0 10px var(--tertiary-neon);
+}
+
+.wishlist-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.wishlist-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.wishlist-count {
+  color: var(--tertiary-neon);
+  letter-spacing: 1px;
+}
+
+.wishlist-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.wishlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.wishlist-card {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(255, 0, 110, 0.08));
+  border: 2px solid var(--primary-neon);
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.wishlist-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px var(--primary-neon);
+}
+
+.wishlist-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.wishlist-card h3 {
+  color: var(--primary-neon);
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 0 10px var(--primary-neon);
+}
+
+.wishlist-price {
+  color: var(--accent-neon);
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.out-stock-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--secondary-neon);
+  color: var(--darker-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.wishlist-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.add-btn,
+.remove-btn {
+  padding: 0.75rem;
+  border: 2px solid;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, var(--primary-neon), var(--tertiary-neon));
+  border-color: var(--primary-neon);
+  color: var(--darker-bg);
+}
+
+.add-btn:hover:not(:disabled) {
+  box-shadow: 0 0 15px var(--primary-neon);
+}
+
+.add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.remove-btn {
+  background: transparent;
+  border-color: var(--secondary-neon);
+  color: var(--secondary-neon);
+}
+
+.remove-btn:hover {
+  background: rgba(255, 0, 110, 0.2);
+  box-shadow: 0 0 10px var(--secondary-neon);
+}
+
+.empty-wishlist {
+  text-align: center;
+  padding: 3rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(255, 0, 110, 0.05));
+  border: 2px dashed var(--tertiary-neon);
+  border-radius: 12px;
+}
+
+.empty-wishlist p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.empty-wishlist button {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--primary-neon), var(--tertiary-neon));
+  border: 2px solid var(--primary-neon);
+  color: var(--darker-bg);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+}
+
+.empty-wishlist button:hover {
+  box-shadow: 0 0 20px var(--primary-neon);
+}

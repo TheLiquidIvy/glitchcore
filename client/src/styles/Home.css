@@ -207,3 +207,7 @@
     grid-template-columns: 1fr;
   }
 }
+
+.features-section {
+  margin-top: 3rem;
+}

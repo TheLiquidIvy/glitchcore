@@ -1,28 +1,25 @@
 .toast-container {
   position: fixed;
-  top: 100px;
+  bottom: 20px;
   right: 20px;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 400px;
 }
 
 .toast {
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  animation: slide-in 0.3s ease-out;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border: 2px solid;
+  gap: 10px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
   font-weight: bold;
-  letter-spacing: 1px;
+  animation: slide-in-right 0.3s ease-out;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes slide-in {
+@keyframes slide-in-right {
   from {
     transform: translateX(400px);
     opacity: 0;
@@ -30,39 +27,31 @@
   to {
     transform: translateX(0);
     opacity: 1;
-  }
-}
-
-@keyframes slide-out {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(400px);
-    opacity: 0;
   }
 }
 
 .toast-success {
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 217, 255, 0.2));
-  border-color: var(--primary-neon);
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.1));
+  border: 2px solid var(--primary-neon);
   color: var(--primary-neon);
-  text-shadow: 0 0 10px var(--primary-neon);
 }
 
 .toast-error {
-  background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(255, 50, 100, 0.2));
-  border-color: var(--secondary-neon);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(255, 0, 110, 0.1));
+  border: 2px solid var(--secondary-neon);
   color: var(--secondary-neon);
-  text-shadow: 0 0 10px var(--secondary-neon);
+}
+
+.toast-warning {
+  background: linear-gradient(135deg, rgba(255, 190, 11, 0.2), rgba(255, 190, 11, 0.1));
+  border: 2px solid var(--accent-neon);
+  color: var(--accent-neon);
 }
 
 .toast-info {
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 190, 11, 0.2));
-  border-color: var(--tertiary-neon);
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 217, 255, 0.1));
+  border: 2px solid var(--tertiary-neon);
   color: var(--tertiary-neon);
-  text-shadow: 0 0 10px var(--tertiary-neon);
 }
 
 .toast-icon {
@@ -71,19 +60,17 @@
 }
 
 .toast-message {
-  flex: 1;
-  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 600px) {
   .toast-container {
+    bottom: 10px;
     right: 10px;
     left: 10px;
-    max-width: none;
   }
 
   .toast {
     padding: 0.75rem 1rem;
-    font-size: 0.9rem;
   }
 }

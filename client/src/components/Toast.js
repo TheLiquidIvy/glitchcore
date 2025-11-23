@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Toast.css';
 
-const Toast = ({ message, type = 'success', duration = 3000 }) => {
-  const [isVisible, setIsVisible] = useState(true);
-
+const Toast = ({ message, type = 'success', duration = 3000, onClose }) => {
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), duration);
+    const timer = setTimeout(onClose, duration);
     return () => clearTimeout(timer);
-  }, [duration]);
-
-  if (!isVisible) return null;
+  }, [duration, onClose]);
 
   return (
     <div className={`toast toast-${type}`}>
@@ -17,18 +13,11 @@ const Toast = ({ message, type = 'success', duration = 3000 }) => {
         {type === 'success' && '✓'}
         {type === 'error' && '✕'}
         {type === 'info' && 'ℹ'}
+        {type === 'warning' && '!'}
       </span>
       <span className="toast-message">{message}</span>
     </div>
   );
 };
-
-export const ToastContainer = ({ toasts }) => (
-  <div className="toast-container">
-    {toasts.map((toast) => (
-      <Toast key={toast.id} {...toast} />
-    ))}
-  </div>
-);
 
 export default Toast;

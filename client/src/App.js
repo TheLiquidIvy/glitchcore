@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -8,7 +8,10 @@ import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import WishlistPage from './pages/WishlistPage';
 import CartReminder from './components/CartReminder';
+import Toast from './components/Toast';
+import ToastContainer from './components/ToastContainer';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -18,6 +21,8 @@ function App() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showCartReminder, setShowCartReminder] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState('');
+  const [toasts, setToasts] = useState([]);
+  const toastIdRef = useRef(0);
 
   const navigateTo = (page, productId = null) => {
     if (page === 'dashboard' && !user) {
@@ -52,6 +57,15 @@ function App() {
     setCartCount(cartCount + 1);
     setLastAddedItem(productName);
     setShowCartReminder(true);
+    addToast(`${productName} added to cart! 🛒`, 'success');
+  };
+
+  const addToast = (message, type = 'success') => {
+    const id = toastIdRef.current++;
+    setToasts(prev => [...prev, { id, message, type }]);
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id));
+    }, 3000);
   };
 
   const renderPage = () => {
@@ -70,10 +84,12 @@ function App() {
         return <ProductDetail productId={selectedProductId} onNavigate={navigateTo} onAddToCart={handleProductAdded} />;
       case 'cart':
         return <Cart onNavigate={navigateTo} />;
+      case 'wishlist':
+        return <WishlistPage onNavigate={navigateTo} onAddToCart={handleProductAdded} />;
       case 'contact':
         return <Contact />;
       default:
-        return <Home onNavigate={navigateTo} />;
+        return <Home onNavigate={navigateTo} addToast={addToast} />;
     }
   };
 
@@ -93,6 +109,14 @@ function App() {
         itemName={lastAddedItem}
         onClose={() => setShowCartReminder(false)}
       />
+
+      <div className="toast-container">
+        {toasts.map(toast => (
+          <div key={toast.id} className={`toast toast-${toast.type}`}>
+            <span className="toast-message">{toast.message}</span>
+          </div>
+        ))}
+      </div>
 
       <header className="cyberpunk-header">
         <button className="logo-link" onClick={() => navigateTo('home')}>

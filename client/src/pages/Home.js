@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Home.css';
+import FlashSale from '../components/FlashSale';
+import NewsletterSignup from '../components/NewsletterSignup';
 
-function Home({ onNavigate }) {
+function Home({ onNavigate, addToast }) {
+  const [showNewsletter, setShowNewsletter] = useState(true);
   return (
     <div className="home-page">
       <section className="hero-section">
@@ -29,6 +32,8 @@ function Home({ onNavigate }) {
           </div>
           <button className="cta-button" onClick={() => onNavigate('products')}>EXPLORE COLLECTION</button>
         </div>
+
+        <FlashSale onNavigate={onNavigate} />
         <div className="hero-image">
           <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80" 
                alt="Cyberpunk Headphones" />
@@ -83,6 +88,8 @@ function Home({ onNavigate }) {
           </div>
         </div>
       </section>
+
+      {showNewsletter && <NewsletterSignup onClose={() => setShowNewsletter(false)} />}
     </div>
   );
 }

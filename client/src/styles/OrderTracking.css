@@ -1,0 +1,112 @@
+.order-tracking {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(255, 0, 110, 0.05));
+  border: 2px solid var(--tertiary-neon);
+  border-radius: 12px;
+  margin-top: 1.5rem;
+}
+
+.order-tracking h3 {
+  color: var(--primary-neon);
+  margin: 0 0 1.5rem 0;
+  letter-spacing: 1px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.order-card {
+  padding: 1.5rem;
+  background: rgba(0, 255, 136, 0.05);
+  border: 2px solid var(--tertiary-neon);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.order-card:hover {
+  border-color: var(--primary-neon);
+  background: rgba(0, 255, 136, 0.08);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.order-info p {
+  margin: 0;
+}
+
+.order-id {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.order-product {
+  color: var(--primary-neon);
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--primary-neon);
+  margin-top: 0.25rem;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.status-badge.green {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--primary-neon);
+  border: 1px solid var(--primary-neon);
+}
+
+.status-badge.blue {
+  background: rgba(0, 217, 255, 0.2);
+  color: var(--tertiary-neon);
+  border: 1px solid var(--tertiary-neon);
+}
+
+.status-badge.yellow {
+  background: rgba(255, 190, 11, 0.2);
+  color: var(--accent-neon);
+  border: 1px solid var(--accent-neon);
+}
+
+.order-progress {
+  margin: 1rem 0;
+}
+
+.progress-bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--tertiary-neon);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-neon), var(--tertiary-neon));
+  transition: width 0.5s ease;
+}
+
+.order-dates {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  gap: 1rem;
+}
+
+.order-date,
+.delivery-date {
+  flex: 1;
+}

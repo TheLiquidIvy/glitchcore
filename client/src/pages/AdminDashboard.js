@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AnimatedCounter from '../components/AnimatedCounter';
 import ProductManagement from './ProductManagement';
 import InventoryManagement from './InventoryManagement';
+import ActivityLog from '../components/ActivityLog';
 import '../styles/Dashboard.css';
 
 function AdminDashboard({ user, onNavigate, onLogout, cartCount }) {
@@ -48,6 +49,9 @@ function AdminDashboard({ user, onNavigate, onLogout, cartCount }) {
         </button>
         <button className={`tab-btn ${activeTab === 'products' ? 'active' : ''}`} onClick={() => setActiveTab('products')}>
           🛠️ PRODUCT MGMT
+        </button>
+        <button className={`tab-btn ${activeTab === 'activity' ? 'active' : ''}`} onClick={() => setActiveTab('activity')}>
+          📊 ACTIVITY LOG
         </button>
         <button className="logout-btn-small" onClick={onLogout}>🚪 LOGOUT</button>
       </div>
@@ -154,6 +158,10 @@ function AdminDashboard({ user, onNavigate, onLogout, cartCount }) {
 
       {activeTab === 'products' && (
         <ProductManagement />
+      )}
+
+      {activeTab === 'activity' && (
+        <ActivityLog cartCount={cartCount} />
       )}
     </div>
   );

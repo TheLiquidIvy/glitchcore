@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/ProductDetail.css';
+import ProductReviews from '../components/ProductReviews';
 
 const PRODUCTS_DATA = [
   { id: 1, name: 'Neon Headphones', price: 149.99, image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80', category: 'Audio', rating: 4.8, inStock: true, description: 'Experience the future of sound with these glitchcore neon headphones.', fullDescription: 'Premium Neon Headphones with 40-hour battery, active noise cancellation, glow-in-the-dark accents, and crystal-clear audio. Perfect for gaming and music production.' },
@@ -82,6 +83,8 @@ function ProductDetail({ productId, onNavigate, onAddToCart }) {
           <p>{product.fullDescription}</p>
         </div>
       </section>
+
+      <ProductReviews productId={productId} />
     </div>
   );
 }

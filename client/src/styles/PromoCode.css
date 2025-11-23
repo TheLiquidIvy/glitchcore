@@ -1,0 +1,82 @@
+.promo-section {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 190, 11, 0.1), rgba(0, 255, 136, 0.1));
+  border: 2px solid var(--accent-neon);
+  border-radius: 10px;
+  margin: 1.5rem 0;
+}
+
+.promo-section h4 {
+  margin: 0 0 1rem 0;
+  color: var(--accent-neon);
+  letter-spacing: 1px;
+}
+
+.applied-code {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 255, 136, 0.1);
+  border: 2px solid var(--primary-neon);
+  border-radius: 8px;
+}
+
+.applied-badge {
+  background: var(--primary-neon);
+  color: var(--darker-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.code-display {
+  color: var(--primary-neon);
+  font-weight: bold;
+  font-family: monospace;
+  text-shadow: 0 0 10px var(--primary-neon);
+}
+
+.discount-percent {
+  margin-left: auto;
+  color: var(--accent-neon);
+  font-weight: bold;
+}
+
+.promo-input-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.promo-input {
+  flex: 1;
+  padding: 0.75rem;
+  background: rgba(10, 14, 39, 0.8);
+  border: 2px solid var(--tertiary-neon);
+  color: var(--text-primary);
+  border-radius: 8px;
+  font-family: 'Orbitron', monospace;
+}
+
+.promo-input:focus {
+  outline: none;
+  border-color: var(--accent-neon);
+  box-shadow: 0 0 10px var(--accent-neon);
+}
+
+.apply-code-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent-neon), var(--primary-neon));
+  border: 2px solid var(--accent-neon);
+  color: var(--darker-bg);
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+}
+
+.apply-code-btn:hover {
+  box-shadow: 0 0 15px var(--accent-neon);
+}

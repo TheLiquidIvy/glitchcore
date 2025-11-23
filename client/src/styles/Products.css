@@ -502,3 +502,30 @@
     font-size: 2rem;
   }
 }
+
+.stock-warning {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.stock-warning.urgent {
+  background: rgba(255, 190, 11, 0.2);
+  color: var(--accent-neon);
+  border: 1px solid var(--accent-neon);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.stock-warning.critical {
+  background: rgba(255, 0, 110, 0.2);
+  color: var(--secondary-neon);
+  border: 1px solid var(--secondary-neon);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

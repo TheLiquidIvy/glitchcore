@@ -213,3 +213,16 @@
     position: static;
   }
 }
+
+.summary-row.discount {
+  color: var(--primary-neon);
+  background: rgba(0, 255, 136, 0.1);
+  padding: 0.75rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--primary-neon);
+}
+
+.summary-row.discount span:last-child {
+  color: var(--accent-neon);
+  font-weight: bold;
+}
