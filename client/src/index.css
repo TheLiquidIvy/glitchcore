@@ -1,0 +1,114 @@
+/* Import cyberpunk styles */
+/* ===== CYBERPUNK GLITCHCORE AESTHETIC ===== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== ROOT THEME VARIABLES ===== */
+:root {
+  --primary-neon: #00ff88;
+  --secondary-neon: #ff006e;
+  --tertiary-neon: #00d9ff;
+  --accent-neon: #ffbe0b;
+  --dark-bg: #0a0e27;
+  --darker-bg: #050813;
+  --text-primary: #e0e6ff;
+  --text-secondary: #a0aeff;
+  --border-color: #1e3a5f;
+  --glitch-duration: 2s;
+}
+
+body {
+  background-color: var(--dark-bg);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 136, 0.03),
+      rgba(0, 255, 136, 0.03) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  color: var(--text-primary);
+  font-family: 'Orbitron', 'Courier New', monospace;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+@keyframes glitch {
+  0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, -2px); }
+  20% { clip-path: inset(92% 0 1% 0); transform: translate(2px, 2px); }
+  40% { clip-path: inset(43% 0 1% 0); transform: translate(-2px, 2px); }
+  60% { clip-path: inset(25% 0 58% 0); transform: translate(2px, -2px); }
+  80% { clip-path: inset(54% 0 7% 0); transform: translate(-2px, -2px); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate(2px, 2px); }
+}
+
+@keyframes glitch-shadow {
+  0% { text-shadow: -2px 0 var(--secondary-neon), 2px 0 var(--tertiary-neon); }
+  20% { text-shadow: 2px 0 var(--secondary-neon), -2px 0 var(--tertiary-neon); }
+  40% { text-shadow: -2px 0 var(--tertiary-neon), 2px 0 var(--secondary-neon); }
+  60% { text-shadow: 2px 0 var(--tertiary-neon), -2px 0 var(--secondary-neon); }
+  80% { text-shadow: -2px 0 var(--secondary-neon), 2px 0 var(--tertiary-neon); }
+  100% { text-shadow: 2px 0 var(--secondary-neon), -2px 0 var(--tertiary-neon); }
+}
+
+@keyframes neon-glow {
+  0%, 100% { text-shadow: 0 0 10px var(--primary-neon), 0 0 20px var(--primary-neon), 0 0 30px var(--primary-neon); }
+  50% { text-shadow: 0 0 20px var(--primary-neon), 0 0 30px var(--primary-neon), 0 0 40px var(--primary-neon); }
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: var(--secondary-neon); box-shadow: 0 0 5px var(--secondary-neon), inset 0 0 5px var(--secondary-neon); }
+  50% { border-color: var(--tertiary-neon); box-shadow: 0 0 15px var(--tertiary-neon), inset 0 0 15px var(--tertiary-neon); }
+}
+
+.glitch {
+  position: relative;
+  color: var(--primary-neon);
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px var(--primary-neon), 0 0 20px var(--primary-neon);
+  animation: glitch-shadow 4s ease-in-out infinite;
+}
+
+.glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 100%;
+  height: 100%;
+  color: var(--secondary-neon);
+  opacity: 0.8;
+  animation: glitch 2.5s ease-in-out infinite;
+  z-index: -1;
+}
+
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 100%;
+  height: 100%;
+  color: var(--tertiary-neon);
+  opacity: 0.6;
+  animation: glitch 2.5s ease-in-out infinite reverse;
+  z-index: -2;
+}
+
+button {
+  font-family: 'Orbitron', monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../styles/Home.css';
 
-function Home() {
+function Home({ onNavigate }) {
   return (
     <div className="home-page">
       <section className="hero-section">
@@ -28,7 +27,7 @@ function Home() {
               <div className="stat-label">SUPPORT ACTIVE</div>
             </div>
           </div>
-          <Link to="/products" className="cta-button">EXPLORE COLLECTION</Link>
+          <button className="cta-button" onClick={() => onNavigate('products')}>EXPLORE COLLECTION</button>
         </div>
         <div className="hero-image">
           <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80" 
