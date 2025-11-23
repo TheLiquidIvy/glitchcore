@@ -1,0 +1,46 @@
+
+/* Make header flex to accommodate theme toggle */
+.cyberpunk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cyberpunk-header nav {
+  flex: 1;
+  min-width: 300px;
+}
+
+.cyberpunk-header .cart-indicator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .cyberpunk-header {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  .cyberpunk-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cyberpunk-header nav {
+    order: 3;
+    min-width: 100%;
+  }
+
+  .cyberpunk-header .theme-toggle {
+    order: 2;
+  }
+
+  .cyberpunk-header .cart-indicator {
+    order: 4;
+  }
+}

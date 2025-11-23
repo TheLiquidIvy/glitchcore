@@ -1,0 +1,147 @@
+:root {
+  /* NEON DARK (Default) */
+  --primary-neon: #00ff88;
+  --secondary-neon: #ff006e;
+  --tertiary-neon: #00d9ff;
+  --accent-neon: #ffbe0b;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --darker-bg: #0a0e27;
+  --bg-color: #0f1424;
+}
+
+/* NEON LIGHT THEME */
+body.theme-neon-light {
+  --primary-neon: #00cc66;
+  --secondary-neon: #ff1577;
+  --tertiary-neon: #00b8d4;
+  --accent-neon: #ff9d00;
+  --text-primary: #1a1a2e;
+  --text-secondary: #555555;
+  --darker-bg: #f0f0f0;
+  --bg-color: #ffffff;
+}
+
+body.theme-neon-light {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  color: #1a1a2e;
+}
+
+body.theme-neon-light .cyberpunk-header {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: rgba(0, 204, 102, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+body.theme-neon-light .home-page,
+body.theme-neon-light .products-page,
+body.theme-neon-light .cart-page {
+  background: #f8f8f8;
+}
+
+body.theme-neon-light .glitch,
+body.theme-neon-light .glitch::before,
+body.theme-neon-light .glitch::after {
+  text-shadow: 0 0 10px rgba(0, 204, 102, 0.4);
+}
+
+body.theme-neon-light .dashboard-card,
+body.theme-neon-light .product-card {
+  background: linear-gradient(135deg, rgba(0, 204, 102, 0.08), rgba(0, 184, 212, 0.08));
+  border-color: rgba(0, 204, 102, 0.3);
+}
+
+body.theme-neon-light .dashboard-card:hover {
+  background: linear-gradient(135deg, rgba(0, 204, 102, 0.15), rgba(0, 184, 212, 0.15));
+}
+
+/* SYNTHWAVE DARK THEME */
+body.theme-synthwave-dark {
+  --primary-neon: #ff006e;
+  --secondary-neon: #00d9ff;
+  --tertiary-neon: #ffbe0b;
+  --accent-neon: #8338ec;
+  --text-primary: #ffffff;
+  --text-secondary: #c0c0c0;
+  --darker-bg: #0a0a1a;
+  --bg-color: #0d0d2b;
+}
+
+body.theme-synthwave-dark {
+  background: linear-gradient(135deg, #0d0d2b 0%, #1a0a2e 100%);
+}
+
+/* SYNTHWAVE LIGHT THEME */
+body.theme-synthwave-light {
+  --primary-neon: #ff1493;
+  --secondary-neon: #00e5ff;
+  --tertiary-neon: #ffd700;
+  --accent-neon: #da70d6;
+  --text-primary: #1a1a2e;
+  --text-secondary: #666666;
+  --darker-bg: #f5f0fa;
+  --bg-color: #fffbf0;
+}
+
+body.theme-synthwave-light {
+  background: linear-gradient(135deg, #fffbf0 0%, #f5f0fa 100%);
+  color: #1a1a2e;
+}
+
+body.theme-synthwave-light .cyberpunk-header {
+  background: rgba(255, 255, 250, 0.95);
+  border-bottom-color: rgba(255, 20, 147, 0.3);
+}
+
+body.theme-synthwave-light .home-page,
+body.theme-synthwave-light .products-page,
+body.theme-synthwave-light .cart-page {
+  background: #fffbf0;
+}
+
+/* LIGHT THEME COMMON STYLES */
+body.theme-neon-light,
+body.theme-synthwave-light {
+  --text-primary: #1a1a2e;
+  --text-secondary: #555555;
+}
+
+body.theme-neon-light .cyberpunk-footer,
+body.theme-synthwave-light .cyberpunk-footer {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a1a2e;
+  border-top-color: currentColor;
+}
+
+body.theme-neon-light .login-page,
+body.theme-synthwave-light .login-page {
+  background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+}
+
+body.theme-neon-light .login-container,
+body.theme-synthwave-light .login-container {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+body.theme-neon-light input,
+body.theme-neon-light select,
+body.theme-synthwave-light input,
+body.theme-synthwave-light select {
+  background: rgba(240, 240, 240, 0.8);
+  color: #1a1a2e;
+  border-color: currentColor;
+}
+
+body.theme-neon-light button,
+body.theme-synthwave-light button {
+  color: #1a1a2e;
+}
+
+/* Smooth theme transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input, select, textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}

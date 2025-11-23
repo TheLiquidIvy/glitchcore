@@ -1,0 +1,90 @@
+.theme-toggle {
+  position: relative;
+}
+
+.theme-dropdown {
+  position: relative;
+}
+
+.theme-toggle-btn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 2px solid var(--tertiary-neon);
+  color: var(--tertiary-neon);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Orbitron', monospace;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--primary-neon);
+  color: var(--primary-neon);
+  box-shadow: 0 0 10px var(--primary-neon);
+}
+
+.theme-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(10, 14, 39, 0.95);
+  border: 2px solid var(--tertiary-neon);
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  min-width: 180px;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 0 20px var(--tertiary-neon);
+}
+
+.theme-dropdown:hover .theme-options {
+  display: flex;
+}
+
+.theme-option {
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+.theme-option:last-child {
+  border-bottom: none;
+}
+
+.theme-option:hover {
+  background: rgba(0, 255, 136, 0.1);
+  color: var(--primary-neon);
+}
+
+.theme-option.active {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 217, 255, 0.1));
+  color: var(--primary-neon);
+  border-left: 3px solid var(--primary-neon);
+  padding-left: calc(1rem - 3px);
+}
+
+.theme-icon {
+  font-size: 1rem;
+  min-width: 20px;
+}
+
+@media (max-width: 768px) {
+  .theme-options {
+    right: auto;
+    left: 0;
+  }
+}

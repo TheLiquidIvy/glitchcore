@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import './styles/themes.css';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Products from './pages/Products';
@@ -12,6 +13,7 @@ import WishlistPage from './pages/WishlistPage';
 import CartReminder from './components/CartReminder';
 import Toast from './components/Toast';
 import ToastContainer from './components/ToastContainer';
+import ThemeToggle from './components/ThemeToggle';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -22,7 +24,15 @@ function App() {
   const [showCartReminder, setShowCartReminder] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState('');
   const [toasts, setToasts] = useState([]);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('glitchcoreTheme') || 'neon-dark';
+  });
   const toastIdRef = useRef(0);
+
+  useEffect(() => {
+    document.body.className = `theme-${theme}`;
+    localStorage.setItem('glitchcoreTheme', theme);
+  }, [theme]);
 
   const navigateTo = (page, productId = null) => {
     if (page === 'dashboard' && !user) {
@@ -129,6 +139,7 @@ function App() {
             <li><button onClick={() => navigateTo('contact')}>Contact</button></li>
           </ul>
         </nav>
+        <ThemeToggle theme={theme} onThemeChange={setTheme} />
         <div className="cart-indicator">
           {user ? (
             <div className="user-status">
