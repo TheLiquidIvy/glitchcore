@@ -1,0 +1,113 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.cyberpunk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 0, 110, 0.1));
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--secondary-neon);
+  box-shadow: 0 0 20px var(--secondary-neon), inset 0 0 20px rgba(255, 0, 110, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.cyberpunk-header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cyberpunk-header nav a {
+  color: var(--tertiary-neon);
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px var(--tertiary-neon);
+  font-family: 'Orbitron', monospace;
+  font-weight: bold;
+}
+
+.cyberpunk-header nav a:hover {
+  color: var(--accent-neon);
+  border: 1px solid var(--accent-neon);
+  box-shadow: 0 0 10px var(--accent-neon), inset 0 0 10px var(--accent-neon);
+  text-shadow: 0 0 15px var(--accent-neon);
+}
+
+.cart-indicator {
+  margin-left: auto;
+}
+
+.cyberpunk-footer {
+  margin-top: 4rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(255, 0, 110, 0.08));
+  border-top: 2px solid var(--primary-neon);
+  text-align: center;
+  color: var(--text-secondary);
+  box-shadow: 0 0 20px var(--primary-neon);
+  font-family: 'Orbitron', monospace;
+}
+
+.cyberpunk-footer p {
+  margin: 0.5rem 0;
+  letter-spacing: 1px;
+}
+
+.cyberpunk-footer a {
+  color: var(--tertiary-neon);
+  text-decoration: none;
+  text-shadow: 0 0 10px var(--tertiary-neon);
+  transition: all 0.3s ease;
+}
+
+.cyberpunk-footer a:hover {
+  color: var(--accent-neon);
+  text-shadow: 0 0 15px var(--accent-neon);
+}
+
+.footer-slogan {
+  margin-top: 1rem !important;
+  color: var(--primary-neon) !important;
+  animation: glitch-shadow 3s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .cyberpunk-header {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cyberpunk-header nav ul {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .cart-indicator {
+    margin-left: 0;
+    width: 100%;
+    order: 3;
+  }
+}

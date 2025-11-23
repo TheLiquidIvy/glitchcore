@@ -1,121 +1,52 @@
-// client/src/App.js
-import React, { useState, useEffect } from 'react';
-import Dashboard from './components/Dashboard';
-import PodDraftsManager from './components/PodDraftsManager';
-
-// ... (AuthForm and RegisterForm functions as provided in your input) ...
-function AuthForm({ setToken, switchToRegister }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const login = async e => {
-    e.preventDefault();
-    setError('');
-
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login failed');
-      localStorage.setItem('authToken', data.token);
-      setToken(data.token);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={login}>
-        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <br />
-        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
-        <br />
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        No account? <button onClick={switchToRegister}>Register here</button>
-      </p>
-    </div>
-  );
-}
-
-function RegisterForm({ setToken, switchToLogin }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const register = async e => {
-    e.preventDefault();
-    setError('');
-    try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
-      localStorage.setItem('authToken', data.token);
-      setToken(data.token);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  return (
-    <div>
-      <h2>Register</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={register}>
-        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <br />
-        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
-        <br />
-        <button type="submit">Register</button>
-      </form>
-      <p>
-        Have an account? <button onClick={switchToLogin}>Login here</button>
-      </p>
-    </div>
-  );
-}
-// -------------------------------------------------------------------
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
+import Contact from './pages/Contact';
+import './App.css';
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('authToken') || '');
-  const [view, setView] = useState('login'); // login, register, dashboard
+  const [cartCount, setCartCount] = useState(0);
 
-  useEffect(() => {
-    if (token) setView('dashboard');
-    else setView('login');
-  }, [token]);
+  return (
+    <Router>
+      <div className="app">
+        <header className="cyberpunk-header">
+          <Link to="/" className="logo-link">
+            <div className="logo">GL!TCHCORE</div>
+          </Link>
+          <nav role="navigation" aria-label="Primary Navigation">
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/products">Products</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+            </ul>
+          </nav>
+          <div className="cart-indicator">
+            <button className="snipcart-checkout" aria-label="Open Shopping Cart">
+              CART ({cartCount})
+            </button>
+          </div>
+        </header>
 
-  const logout = () => {
-    localStorage.removeItem('authToken');
-    setToken('');
-    setView('login');
-  };
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products onProductClick={() => setCartCount(cartCount + 1)} />} />
+            <Route path="/product/:id" element={<ProductDetail onAddToCart={() => setCartCount(cartCount + 1)} />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
 
-  if (view === 'login') return <AuthForm setToken={setToken} switchToRegister={() => setView('register')} />;
-  if (view === 'register') return <RegisterForm setToken={setToken} switchToLogin={() => setView('login')} />;
-  if (view === 'dashboard')
-    return (
-      <div>
-        <button onClick={logout}>Logout</button>
-        <Dashboard token={token} />
-        <hr />
-        <PodDraftsManager token={token} />
+        <footer className="cyberpunk-footer">
+          <p>© 2024 Glitchcore Cyberpunk Store. All rights reserved.</p>
+          <p>Contact us: <a href="mailto:support@glitchcore.store">support@glitchcore.store</a></p>
+          <p className="footer-slogan">[ ENTER THE GLITCH ] // {'{'} FUTURE.NOW {'}'}</p>
+        </footer>
       </div>
-    );
-
-  return null;
+    </Router>
+  );
 }
 
 export default App;
