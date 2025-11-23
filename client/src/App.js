@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -13,25 +13,34 @@ function App() {
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [user, setUser] = useState(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const navigateTo = (page, productId = null) => {
     if (page === 'dashboard' && !user) {
-      setCurrentPage('login');
+      handlePageTransition('login');
       return;
     }
-    setCurrentPage(page);
-    if (productId) setSelectedProductId(productId);
-    window.scrollTo(0, 0);
+    handlePageTransition(page, productId);
+  };
+
+  const handlePageTransition = (page, productId = null) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentPage(page);
+      if (productId) setSelectedProductId(productId);
+      window.scrollTo(0, 0);
+      setTimeout(() => setIsTransitioning(false), 50);
+    }, 300);
   };
 
   const handleLogin = (userData) => {
     setUser(userData);
-    setCurrentPage('dashboard');
+    handlePageTransition('dashboard');
   };
 
   const handleLogout = () => {
     setUser(null);
-    setCurrentPage('home');
+    handlePageTransition('home');
     setCartCount(0);
   };
 
@@ -58,7 +67,11 @@ function App() {
 
   // Show login page without header/footer
   if (currentPage === 'login') {
-    return renderPage();
+    return (
+      <div className={`login-wrapper ${isTransitioning ? 'transitioning-out' : 'transitioning-in'}`}>
+        {renderPage()}
+      </div>
+    );
   }
 
   return (
@@ -89,7 +102,7 @@ function App() {
         </div>
       </header>
 
-      <main className="main-content">
+      <main className={`main-content ${isTransitioning ? 'transitioning' : ''}`}>
         {renderPage()}
       </main>
 
