@@ -1,13 +1,4 @@
 {
-{
-  "scripts": {
-    "start": "node server.js",
-    "migrate": "npx sequelize-cli db:migrate",
-    "migrate:ci": "NODE_ENV=test npx sequelize-cli db:migrate", 
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-
-{
   "name": "glitchcore-api",
   "version": "1.0.0",
   "description": "Glitchcore API for user management and subscriptions.",
