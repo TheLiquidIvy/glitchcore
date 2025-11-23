@@ -1,11 +1,10 @@
 const { Sequelize, DataTypes, Op } = require('sequelize');
+
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite',
   logging: false,
 });
-
-// ... inside server/models.js
 
 // User model
 const User = sequelize.define('User', {
@@ -13,82 +12,13 @@ const User = sequelize.define('User', {
   hashedPassword: { type: DataTypes.STRING, allowNull: false },
   stripeCustomerId: { type: DataTypes.STRING },
   subscriptionStatus: { type: DataTypes.STRING, defaultValue: 'visitor' },
-
-  // --- ADD THESE NEW FIELDS ---
   bio: { type: DataTypes.TEXT, allowNull: true },
   avatarUrl: { type: DataTypes.STRING, allowNull: true },
-  socialLinks: { type: DataTypes.JSON, allowNull: true }, // e.g. { twitter: '', instagram: '' }
-  theme: { 
-    type: DataTypes.STRING, 
-    allowNull: false, 
-    defaultValue: 'light' 
-  },
-
-  // ... inside server/models.js
-// ... (after User, Order, PodDraft, Recommendation, Image, BlogPost models) ...
-
-// --- NEW FORUM MODELS ---
-
-const ForumCategory = sequelize.define('ForumCategory', {
-  name: { type: DataTypes.STRING, allowNull: false, unique: true },
-  description: { type: DataTypes.TEXT, allowNull: true },
+  socialLinks: { type: DataTypes.JSON, allowNull: true },
+  theme: { type: DataTypes.STRING, allowNull: false, defaultValue: 'light' },
 });
 
-const Topic = sequelize.define('Topic', {
-  title: { type: DataTypes.STRING, allowNull: false },
-  // Foreign keys (userId, categoryId) will be added by associations
-});
-
-const Post = sequelize.define('Post', {
-  content: { type: DataTypes.TEXT, allowNull: false },
-  // Foreign keys (userId, topicId) will be added by associations
-});
-
-// ----------------------------
-
-// --- RELATIONSHIPS ---
-// (Existing relationships)
-User.hasMany(Order, { foreignKey: 'userId' });
-User.hasMany(PodDraft, { foreignKey: 'userId' });
-User.hasMany(Recommendation, { foreignKey: 'userId' });
-// ... (add User.hasMany(BlogPost) if you want)
-
-// (New Forum relationships)
-// User <-> Topic/Post
-User.hasMany(Topic, { foreignKey: 'userId' });
-Topic.belongsTo(User, { foreignKey: 'userId' });
-
-User.hasMany(Post, { foreignKey: 'userId' });
-Post.belongsTo(User, { foreignKey: 'userId' });
-
-// Category <-> Topic
-ForumCategory.hasMany(Topic, { foreignKey: 'categoryId' });
-Topic.belongsTo(ForumCategory, { foreignKey: 'categoryId' });
-
-// Topic <-> Post
-Topic.hasMany(Post, { foreignKey: 'topicId' });
-Post.belongsTo(Topic, { foreignKey: 'topicId' });
-// ----------------------------
-
-
-module.exports = { 
-  sequelize, 
-  User, 
-  Order, 
-  PodDraft, 
-  Recommendation, 
-  Image, 
-  BlogPost,
-  // --- ADD THESE ---
-  ForumCategory,
-  Topic,
-  Post,
-  // -----------------
-  Op 
-};
-});
-
-// Order model (from Part 1)
+// Order model
 const Order = sequelize.define('Order', {
   userId: { type: DataTypes.INTEGER, allowNull: false },
   orderDate: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
@@ -98,7 +28,7 @@ const Order = sequelize.define('Order', {
   stripePaymentIntentId: { type: DataTypes.STRING, unique: true }
 });
 
-// POD Draft model (from Part 1)
+// POD Draft model
 const PodDraft = sequelize.define('PodDraft', {
   userId: { type: DataTypes.INTEGER, allowNull: false },
   title: { type: DataTypes.STRING },
@@ -106,20 +36,20 @@ const PodDraft = sequelize.define('PodDraft', {
   status: { type: DataTypes.STRING, defaultValue: 'draft' }
 });
 
-// Recommendation model (from Part 1)
+// Recommendation model
 const Recommendation = sequelize.define('Recommendation', {
   userId: { type: DataTypes.INTEGER, allowNull: false },
   imageId: { type: DataTypes.INTEGER },
   reason: { type: DataTypes.STRING }
 });
 
-// Image model (for recommendations demo) (from Part 1)
+// Image model
 const Image = sequelize.define('Image', {
   url: { type: DataTypes.STRING, allowNull: false },
   title: { type: DataTypes.STRING }
 });
 
-// --- NEW BLOG POST MODEL ---
+// Blog Post model
 const BlogPost = sequelize.define('BlogPost', {
   title: { type: DataTypes.STRING, allowNull: false },
   category: { type: DataTypes.STRING, allowNull: false },
@@ -129,13 +59,37 @@ const BlogPost = sequelize.define('BlogPost', {
   slug: { type: DataTypes.STRING, allowNull: false, unique: true },
   publishedAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
 });
-// ----------------------------
+
+// Forum Category model
+const ForumCategory = sequelize.define('ForumCategory', {
+  name: { type: DataTypes.STRING, allowNull: false, unique: true },
+  description: { type: DataTypes.TEXT, allowNull: true },
+});
+
+// Forum Topic model
+const Topic = sequelize.define('Topic', {
+  title: { type: DataTypes.STRING, allowNull: false },
+});
+
+// Forum Post model
+const Post = sequelize.define('Post', {
+  content: { type: DataTypes.TEXT, allowNull: false },
+});
 
 // Relationships
 User.hasMany(Order, { foreignKey: 'userId' });
 User.hasMany(PodDraft, { foreignKey: 'userId' });
 User.hasMany(Recommendation, { foreignKey: 'userId' });
-// Add any new relationships if needed, e.g., User.hasMany(BlogPost)
+User.hasMany(Topic, { foreignKey: 'userId' });
+User.hasMany(Post, { foreignKey: 'userId' });
+
+ForumCategory.hasMany(Topic, { foreignKey: 'categoryId' });
+Topic.belongsTo(ForumCategory, { foreignKey: 'categoryId' });
+Topic.belongsTo(User, { foreignKey: 'userId' });
+
+Topic.hasMany(Post, { foreignKey: 'topicId' });
+Post.belongsTo(Topic, { foreignKey: 'topicId' });
+Post.belongsTo(User, { foreignKey: 'userId' });
 
 module.exports = { 
   sequelize, 
@@ -144,6 +98,9 @@ module.exports = {
   PodDraft, 
   Recommendation, 
   Image, 
-  BlogPost, // <-- Add BlogPost here
+  BlogPost,
+  ForumCategory,
+  Topic,
+  Post,
   Op 
 };
