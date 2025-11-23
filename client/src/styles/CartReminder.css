@@ -1,0 +1,168 @@
+.cart-reminder-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fade-in-overlay 0.3s ease-out;
+}
+
+@keyframes fade-in-overlay {
+  from {
+    opacity: 0;
+    background: rgba(0, 0, 0, 0);
+  }
+  to {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.cart-reminder-modal {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(255, 0, 110, 0.15));
+  border: 3px solid var(--primary-neon);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 40px var(--primary-neon), inset 0 0 30px rgba(0, 255, 136, 0.1);
+  animation: slide-up 0.4s ease-out;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.reminder-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--secondary-neon);
+}
+
+.reminder-icon {
+  font-size: 2.5rem;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.reminder-header h2 {
+  color: var(--primary-neon);
+  font-size: 1.4rem;
+  margin: 0;
+  text-shadow: 0 0 15px var(--primary-neon);
+  letter-spacing: 2px;
+}
+
+.reminder-content {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  animation: fade-in 0.5s ease-out 0.2s both;
+}
+
+.item-name {
+  color: var(--accent-neon);
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 0 10px var(--accent-neon);
+}
+
+.reminder-text {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+.reminder-progress {
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon), var(--tertiary-neon));
+  border-radius: 2px;
+  margin-top: 1rem;
+  animation: progress-bar 3.5s ease-in-out;
+}
+
+@keyframes progress-bar {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.reminder-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.reminder-btn {
+  padding: 0.75rem 1rem;
+  border: 2px solid;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 1px;
+}
+
+.close-btn {
+  background: transparent;
+  border-color: var(--tertiary-neon);
+  color: var(--tertiary-neon);
+}
+
+.close-btn:hover {
+  background: rgba(0, 217, 255, 0.2);
+  box-shadow: 0 0 10px var(--tertiary-neon);
+}
+
+.view-btn {
+  background: linear-gradient(135deg, var(--primary-neon), var(--tertiary-neon));
+  border-color: var(--primary-neon);
+  color: var(--darker-bg);
+}
+
+.view-btn:hover {
+  box-shadow: 0 0 15px var(--primary-neon);
+  transform: scale(1.05);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .cart-reminder-modal {
+    padding: 1.5rem;
+  }
+
+  .reminder-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .reminder-footer {
+    grid-template-columns: 1fr;
+  }
+}

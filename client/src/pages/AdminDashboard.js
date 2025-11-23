@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import AnimatedCounter from '../components/AnimatedCounter';
 import ProductManagement from './ProductManagement';
+import InventoryManagement from './InventoryManagement';
 import '../styles/Dashboard.css';
 
-function AdminDashboard({ user, onNavigate, onLogout }) {
+function AdminDashboard({ user, onNavigate, onLogout, cartCount }) {
   const [activeTab, setActiveTab] = useState('dashboard');
   
   const [analytics] = useState({
@@ -42,13 +43,16 @@ function AdminDashboard({ user, onNavigate, onLogout }) {
         <button className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
           📊 DASHBOARD
         </button>
+        <button className={`tab-btn ${activeTab === 'inventory' ? 'active' : ''}`} onClick={() => setActiveTab('inventory')}>
+          📦 INVENTORY ({cartCount})
+        </button>
         <button className={`tab-btn ${activeTab === 'products' ? 'active' : ''}`} onClick={() => setActiveTab('products')}>
-          📦 PRODUCT MANAGEMENT
+          🛠️ PRODUCT MGMT
         </button>
         <button className="logout-btn-small" onClick={onLogout}>🚪 LOGOUT</button>
       </div>
 
-      {activeTab === 'dashboard' ? (
+      {activeTab === 'dashboard' && (
       <div className="dashboard-grid">
         {/* Analytics */}
         <section className="dashboard-card full-width">
@@ -142,7 +146,13 @@ function AdminDashboard({ user, onNavigate, onLogout }) {
           </div>
         </section>
       </div>
-      ) : (
+      )}
+
+      {activeTab === 'inventory' && (
+        <InventoryManagement cartCount={cartCount} />
+      )}
+
+      {activeTab === 'products' && (
         <ProductManagement />
       )}
     </div>

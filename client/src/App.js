@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import CartReminder from './components/CartReminder';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -15,6 +16,8 @@ function App() {
   const [cartCount, setCartCount] = useState(0);
   const [user, setUser] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showCartReminder, setShowCartReminder] = useState(false);
+  const [lastAddedItem, setLastAddedItem] = useState('');
 
   const navigateTo = (page, productId = null) => {
     if (page === 'dashboard' && !user) {
@@ -45,20 +48,26 @@ function App() {
     setCartCount(0);
   };
 
+  const handleProductAdded = (productName) => {
+    setCartCount(cartCount + 1);
+    setLastAddedItem(productName);
+    setShowCartReminder(true);
+  };
+
   const renderPage = () => {
     switch (currentPage) {
       case 'login':
         return <Login onLogin={handleLogin} />;
       case 'dashboard':
         return user?.role === 'admin' 
-          ? <AdminDashboard user={user} onNavigate={navigateTo} onLogout={handleLogout} />
+          ? <AdminDashboard user={user} onNavigate={navigateTo} onLogout={handleLogout} cartCount={cartCount} />
           : <UserDashboard user={user} onNavigate={navigateTo} onLogout={handleLogout} cartCount={cartCount} />;
       case 'home':
         return <Home onNavigate={navigateTo} />;
       case 'products':
-        return <Products onNavigate={navigateTo} onProductClick={() => setCartCount(cartCount + 1)} />;
+        return <Products onNavigate={navigateTo} onProductClick={handleProductAdded} />;
       case 'product-detail':
-        return <ProductDetail productId={selectedProductId} onNavigate={navigateTo} onAddToCart={() => setCartCount(cartCount + 1)} />;
+        return <ProductDetail productId={selectedProductId} onNavigate={navigateTo} onAddToCart={handleProductAdded} />;
       case 'cart':
         return <Cart onNavigate={navigateTo} />;
       case 'contact':
@@ -79,6 +88,12 @@ function App() {
 
   return (
     <div className="app">
+      <CartReminder 
+        isVisible={showCartReminder} 
+        itemName={lastAddedItem}
+        onClose={() => setShowCartReminder(false)}
+      />
+
       <header className="cyberpunk-header">
         <button className="logo-link" onClick={() => navigateTo('home')}>
           <div className="logo">GL!TCHCORE</div>

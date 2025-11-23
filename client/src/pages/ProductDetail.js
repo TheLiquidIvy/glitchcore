@@ -26,7 +26,7 @@ function ProductDetail({ productId, onNavigate, onAddToCart }) {
     );
   }
 
-  const handleAddToCart = () => { onAddToCart(); alert(`${product.name} x${quantity} added to cart!`); };
+  const handleAddToCart = () => { onAddToCart(product.name); };
 
   return (
     <div className="product-detail-page">

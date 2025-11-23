@@ -98,8 +98,7 @@ function Products({ onNavigate, onProductClick }) {
               <button 
                 className="cart-btn"
                 onClick={() => {
-                  onProductClick();
-                  alert(`${product.name} added to cart!`);
+                  onProductClick(product.name);
                 }}
               >
                 ADD TO CART
