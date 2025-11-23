@@ -1,0 +1,79 @@
+.recommendations-card {
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(255, 0, 110, 0.05));
+  border: 2px solid var(--tertiary-neon);
+  border-radius: 15px;
+  box-shadow: 0 0 20px var(--tertiary-neon);
+  margin-top: 2rem;
+}
+
+.recommendations-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.recommendation-item {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 255, 136, 0.1));
+  border: 2px solid var(--primary-neon);
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.recommendation-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-neon);
+  box-shadow: 0 0 25px var(--primary-neon);
+}
+
+.rec-emoji {
+  font-size: 2.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.recommendation-item h4 {
+  color: var(--primary-neon);
+  margin: 0;
+  text-shadow: 0 0 10px var(--primary-neon);
+}
+
+.rec-price {
+  color: var(--accent-neon);
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.rec-btn {
+  padding: 0.75rem;
+  background: linear-gradient(135deg, var(--primary-neon), var(--tertiary-neon));
+  color: var(--darker-bg);
+  border: 2px solid var(--primary-neon);
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  margin-top: auto;
+}
+
+.rec-btn:hover {
+  box-shadow: 0 0 15px var(--primary-neon);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+  }
+}

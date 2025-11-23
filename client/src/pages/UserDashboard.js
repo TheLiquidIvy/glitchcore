@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AnimatedCounter from '../components/AnimatedCounter';
+import ProductRecommendations from '../components/ProductRecommendations';
 import '../styles/Dashboard.css';
 
 function UserDashboard({ user, onNavigate, onLogout, cartCount }) {
@@ -110,6 +111,9 @@ function UserDashboard({ user, onNavigate, onLogout, cartCount }) {
           </div>
         </section>
       </div>
+
+      {/* You May Also Like - Full Width */}
+      <ProductRecommendations />
     </div>
   );
 }

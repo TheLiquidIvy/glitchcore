@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import AnimatedCounter from '../components/AnimatedCounter';
+import ProductManagement from './ProductManagement';
 import '../styles/Dashboard.css';
 
 function AdminDashboard({ user, onNavigate, onLogout }) {
+  const [activeTab, setActiveTab] = useState('dashboard');
+  
   const [analytics] = useState({
     totalRevenue: 12847.50,
     totalOrders: 247,
@@ -34,6 +37,18 @@ function AdminDashboard({ user, onNavigate, onLogout }) {
         </div>
       </div>
 
+      {/* Admin Tabs */}
+      <div className="admin-tabs">
+        <button className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>
+          📊 DASHBOARD
+        </button>
+        <button className={`tab-btn ${activeTab === 'products' ? 'active' : ''}`} onClick={() => setActiveTab('products')}>
+          📦 PRODUCT MANAGEMENT
+        </button>
+        <button className="logout-btn-small" onClick={onLogout}>🚪 LOGOUT</button>
+      </div>
+
+      {activeTab === 'dashboard' ? (
       <div className="dashboard-grid">
         {/* Analytics */}
         <section className="dashboard-card full-width">
@@ -127,6 +142,9 @@ function AdminDashboard({ user, onNavigate, onLogout }) {
           </div>
         </section>
       </div>
+      ) : (
+        <ProductManagement />
+      )}
     </div>
   );
 }
