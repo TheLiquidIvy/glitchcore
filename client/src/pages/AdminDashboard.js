@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AnimatedCounter from '../components/AnimatedCounter';
 import '../styles/Dashboard.css';
 
 function AdminDashboard({ user, onNavigate, onLogout }) {
@@ -39,22 +40,22 @@ function AdminDashboard({ user, onNavigate, onLogout }) {
           <h2 className="glitch" data-text="ANALYTICS">ANALYTICS</h2>
           <div className="analytics-grid">
             <div className="analytics-item">
-              <div className="analytics-value">${analytics.totalRevenue.toFixed(2)}</div>
+              <div className="analytics-value"><AnimatedCounter target={analytics.totalRevenue} duration={3000} prefix="$" /></div>
               <div className="analytics-label">TOTAL REVENUE</div>
               <div className="analytics-trend">↑ 12.5% this month</div>
             </div>
             <div className="analytics-item">
-              <div className="analytics-value">{analytics.totalOrders}</div>
+              <div className="analytics-value"><AnimatedCounter target={analytics.totalOrders} duration={2500} /></div>
               <div className="analytics-label">TOTAL ORDERS</div>
               <div className="analytics-trend">↑ 8.3% this month</div>
             </div>
             <div className="analytics-item">
-              <div className="analytics-value">{analytics.activeUsers.toLocaleString()}</div>
+              <div className="analytics-value"><AnimatedCounter target={analytics.activeUsers} duration={3000} /></div>
               <div className="analytics-label">ACTIVE USERS</div>
               <div className="analytics-trend">↑ 15.2% this month</div>
             </div>
             <div className="analytics-item">
-              <div className="analytics-value">{analytics.conversionRate}%</div>
+              <div className="analytics-value"><AnimatedCounter target={Math.floor(analytics.conversionRate * 10)} duration={2000} suffix="%" /></div>
               <div className="analytics-label">CONVERSION RATE</div>
               <div className="analytics-trend">↑ 0.8% this month</div>
             </div>

@@ -1,45 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import SearchBar from '../components/SearchBar';
 import '../styles/Products.css';
 
 const PRODUCTS_DATA = [
-  { id: 1, name: 'Neon Headphones', price: 149.99, image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=500&q=80', category: 'Audio', rating: 4.8, description: 'Experience the future of sound with these glitchcore neon headphones.' },
-  { id: 2, name: 'Cybernetic Jacket', price: 299.99, image: 'https://images.unsplash.com/photo-1520975690543-6f0a5a5acb4e?auto=format&fit=crop&w=400&q=80', category: 'Fashion', rating: 4.9, description: 'High-tech cybernetic jacket with neon trims and tech integration.' },
-  { id: 3, name: 'Holo Visor', price: 89.99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80', category: 'Accessories', rating: 4.6, description: 'Futuristic holographic visor for augmented reality experiences.' },
-  { id: 4, name: 'Pixelated Sneakers', price: 129.99, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80', category: 'Footwear', rating: 4.7, description: 'Retro pixel art style sneakers with glowing soles and LED accents.' },
-  { id: 5, name: 'Glitch Mask', price: 59.99, image: 'https://images.unsplash.com/photo-1518173946687-a4c8895d9e9d?auto=format&fit=crop&w=400&q=80', category: 'Accessories', rating: 4.5, description: 'Mask with glitch effect for cyberpunk cosplay and conventions.' },
-  { id: 6, name: 'Neural Interface Watch', price: 199.99, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80', category: 'Tech', rating: 4.9, description: 'Advanced wearable tech with holographic display and AI integration.' },
+  { id: 1, name: 'Neon Headphones', price: 149.99, category: 'Audio', emoji: '🎧' },
+  { id: 2, name: 'Cybernetic Jacket', price: 299.99, category: 'Fashion', emoji: '🧥' },
+  { id: 3, name: 'Glitch LED Monitor', price: 799.99, category: 'Tech', emoji: '🖥️' },
+  { id: 4, name: 'Pixelated Sneakers', price: 129.99, category: 'Fashion', emoji: '👟' },
+  { id: 5, name: 'Neural Interface Watch', price: 199.99, category: 'Tech', emoji: '⌚' },
+  { id: 6, name: 'Sonic Goggles', price: 89.99, category: 'Accessories', emoji: '🕶️' },
 ];
 
 function Products({ onNavigate, onProductClick }) {
-  const [filter, setFilter] = useState('All');
+  const [filteredProducts, setFilteredProducts] = useState(PRODUCTS_DATA);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular');
 
-  const categories = ['All', 'Audio', 'Fashion', 'Accessories', 'Footwear', 'Tech'];
+  const categories = ['All', 'Audio', 'Fashion', 'Tech', 'Accessories'];
 
-  const filtered = filter === 'All' ? PRODUCTS_DATA : PRODUCTS_DATA.filter(p => p.category === filter);
-  const sorted = [...filtered].sort((a, b) => {
-    if (sortBy === 'price-low') return a.price - b.price;
-    if (sortBy === 'price-high') return b.price - a.price;
-    if (sortBy === 'rating') return b.rating - a.rating;
-    return 0;
-  });
+  useEffect(() => {
+    let filtered = PRODUCTS_DATA;
+
+    if (selectedCategory !== 'All') {
+      filtered = filtered.filter(p => p.category === selectedCategory);
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    let sorted = [...filtered];
+    if (sortBy === 'price-low') sorted.sort((a, b) => a.price - b.price);
+    if (sortBy === 'price-high') sorted.sort((a, b) => b.price - a.price);
+
+    setFilteredProducts(sorted);
+  }, [selectedCategory, searchQuery, sortBy]);
 
   return (
     <div className="products-page">
-      <section className="products-header">
-        <h1 className="glitch" data-text="PRODUCT CATALOG">PRODUCT CATALOG</h1>
-        <p className="products-subtitle">Explore our collection of cutting-edge cyberpunk gear</p>
-      </section>
+      <div className="products-header">
+        <h1 className="glitch" data-text="CYBERPUNK COLLECTION">CYBERPUNK COLLECTION</h1>
+        <p className="products-subtitle">[ {filteredProducts.length} ITEMS AVAILABLE ]</p>
+      </div>
 
-      <section className="products-controls">
+      <SearchBar 
+        onSearch={setSearchQuery}
+        placeholder="Search cyberpunk gear..."
+      />
+
+      <div className="products-controls">
         <div className="filter-section">
           <h3>CATEGORIES</h3>
           <div className="filter-buttons">
             {categories.map(cat => (
               <button
                 key={cat}
-                className={`filter-btn ${filter === cat ? 'active' : ''}`}
-                onClick={() => setFilter(cat)}
+                className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(cat)}
               >
                 {cat}
               </button>
@@ -53,30 +73,53 @@ function Products({ onNavigate, onProductClick }) {
             <option value="popular">Most Popular</option>
             <option value="price-low">Price: Low to High</option>
             <option value="price-high">Price: High to Low</option>
-            <option value="rating">Highest Rated</option>
           </select>
         </div>
-      </section>
+      </div>
 
-      <section className="products-grid">
-        {sorted.map(product => (
-          <div key={product.id} className="product-card" onClick={() => { onNavigate('product-detail', product.id); onProductClick(); }}>
-            <div className="product-image-container">
-              <img src={product.image} alt={product.name} className="product-image" />
-              <div className="product-overlay">VIEW DETAILS</div>
-            </div>
-            <div className="product-info">
-              <h3>{product.name}</h3>
-              <div className="product-rating">{'⭐'.repeat(Math.floor(product.rating))} ({product.rating})</div>
-              <p className="product-category">{product.category}</p>
-              <div className="product-footer">
-                <div className="price">${product.price}</div>
-                <button className="add-btn" onClick={(e) => { e.stopPropagation(); alert(`${product.name} added to cart!`); }}>ADD TO CART</button>
-              </div>
+      <div className="products-grid">
+        {filteredProducts.map((product, index) => (
+          <div 
+            key={product.id} 
+            className="product-card fade-in glow-on-hover"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div className="product-emoji">{product.emoji}</div>
+            <h3>{product.name}</h3>
+            <p className="product-price price-glitch">${product.price.toFixed(2)}</p>
+            <p className="product-category">{product.category}</p>
+            <div className="product-actions">
+              <button 
+                className="view-btn"
+                onClick={() => onNavigate('product-detail', product.id)}
+              >
+                VIEW
+              </button>
+              <button 
+                className="cart-btn"
+                onClick={() => {
+                  onProductClick();
+                  alert(`${product.name} added to cart!`);
+                }}
+              >
+                ADD TO CART
+              </button>
             </div>
           </div>
         ))}
-      </section>
+      </div>
+
+      {filteredProducts.length === 0 && (
+        <div className="no-results">
+          <p>NO PRODUCTS FOUND</p>
+          <button onClick={() => {
+            setSearchQuery('');
+            setSelectedCategory('All');
+          }} className="reset-btn">
+            RESET FILTERS
+          </button>
+        </div>
+      )}
     </div>
   );
 }

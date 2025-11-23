@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AnimatedCounter from '../components/AnimatedCounter';
 import '../styles/Dashboard.css';
 
 function UserDashboard({ user, onNavigate, onLogout, cartCount }) {
@@ -28,19 +29,19 @@ function UserDashboard({ user, onNavigate, onLogout, cartCount }) {
           <h2 className="glitch" data-text="ACCOUNT STATS">ACCOUNT STATS</h2>
           <div className="stats-grid">
             <div className="stat-item">
-              <div className="stat-value">{orders.length}</div>
+              <div className="stat-value"><AnimatedCounter target={orders.length} duration={2000} /></div>
               <div className="stat-label">ORDERS</div>
             </div>
             <div className="stat-item">
-              <div className="stat-value">{wishlist.length}</div>
+              <div className="stat-value"><AnimatedCounter target={wishlist.length} duration={2000} /></div>
               <div className="stat-label">WISHLIST</div>
             </div>
             <div className="stat-item">
-              <div className="stat-value">${orders.reduce((sum, o) => sum + o.total, 0).toFixed(2)}</div>
+              <div className="stat-value"><AnimatedCounter target={orders.reduce((sum, o) => sum + o.total, 0)} duration={2000} prefix="$" suffix="" /></div>
               <div className="stat-label">TOTAL SPENT</div>
             </div>
             <div className="stat-item">
-              <div className="stat-value">{cartCount}</div>
+              <div className="stat-value"><AnimatedCounter target={cartCount} duration={1500} /></div>
               <div className="stat-label">CART ITEMS</div>
             </div>
           </div>

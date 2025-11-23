@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Contact from './pages/Contact';
+import Cart from './pages/Cart';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 
@@ -58,6 +59,8 @@ function App() {
         return <Products onNavigate={navigateTo} onProductClick={() => setCartCount(cartCount + 1)} />;
       case 'product-detail':
         return <ProductDetail productId={selectedProductId} onNavigate={navigateTo} onAddToCart={() => setCartCount(cartCount + 1)} />;
+      case 'cart':
+        return <Cart onNavigate={navigateTo} />;
       case 'contact':
         return <Contact />;
       default:
@@ -96,7 +99,7 @@ function App() {
           ) : (
             <button className="login-header-btn" onClick={() => navigateTo('login')}>LOGIN</button>
           )}
-          <button className="snipcart-checkout" aria-label="Open Shopping Cart">
+          <button className="snipcart-checkout" aria-label="Open Shopping Cart" onClick={() => navigateTo('cart')}>
             CART ({cartCount})
           </button>
         </div>
@@ -109,7 +112,7 @@ function App() {
       <footer className="cyberpunk-footer">
         <p>© 2024 Glitchcore Cyberpunk Store. All rights reserved.</p>
         <p>Contact us: <a href="mailto:support@glitchcore.store">support@glitchcore.store</a></p>
-        <p className="footer-slogan">[ ENTER THE GLITCH ] // {'{'} FUTURE.NOW {'}'}</p>
+        <p className="footer-slogan">[ ENTER THE GLITCH ] // FUTURE.NOW</p>
       </footer>
     </div>
   );
