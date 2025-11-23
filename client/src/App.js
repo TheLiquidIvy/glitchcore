@@ -15,6 +15,10 @@ function App() {
   const [user, setUser] = useState(null);
 
   const navigateTo = (page, productId = null) => {
+    if (page === 'dashboard' && !user) {
+      setCurrentPage('login');
+      return;
+    }
     setCurrentPage(page);
     if (productId) setSelectedProductId(productId);
     window.scrollTo(0, 0);
@@ -31,14 +35,12 @@ function App() {
     setCartCount(0);
   };
 
-  if (!user) {
-    return <Login onLogin={handleLogin} />;
-  }
-
   const renderPage = () => {
     switch (currentPage) {
+      case 'login':
+        return <Login onLogin={handleLogin} />;
       case 'dashboard':
-        return user.role === 'admin' 
+        return user?.role === 'admin' 
           ? <AdminDashboard user={user} onNavigate={navigateTo} onLogout={handleLogout} />
           : <UserDashboard user={user} onNavigate={navigateTo} onLogout={handleLogout} cartCount={cartCount} />;
       case 'home':
@@ -54,6 +56,11 @@ function App() {
     }
   };
 
+  // Show login page without header/footer
+  if (currentPage === 'login') {
+    return renderPage();
+  }
+
   return (
     <div className="app">
       <header className="cyberpunk-header">
@@ -68,10 +75,14 @@ function App() {
           </ul>
         </nav>
         <div className="cart-indicator">
-          <div className="user-status">
-            <span className="user-badge">👤 {user.name}</span>
-            <button className="dashboard-link" onClick={() => navigateTo('dashboard')}>DASHBOARD</button>
-          </div>
+          {user ? (
+            <div className="user-status">
+              <span className="user-badge">👤 {user.name}</span>
+              <button className="dashboard-link" onClick={() => navigateTo('dashboard')}>DASHBOARD</button>
+            </div>
+          ) : (
+            <button className="login-header-btn" onClick={() => navigateTo('login')}>LOGIN</button>
+          )}
           <button className="snipcart-checkout" aria-label="Open Shopping Cart">
             CART ({cartCount})
           </button>

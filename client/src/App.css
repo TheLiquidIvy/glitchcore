@@ -156,6 +156,25 @@
   align-items: center;
 }
 
+.login-header-btn {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--secondary-neon), var(--accent-neon));
+  color: var(--darker-bg);
+  border: 2px solid var(--secondary-neon);
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+}
+
+.login-header-btn:hover {
+  box-shadow: 0 0 15px var(--secondary-neon);
+  transform: scale(1.05);
+}
+
 @media (max-width: 768px) {
   .user-status {
     flex-direction: column;
@@ -169,6 +188,11 @@
   }
 
   .dashboard-link {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .login-header-btn {
     font-size: 0.8rem;
     padding: 0.4rem 0.8rem;
   }
