@@ -39,16 +39,44 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: transparent;
-  border: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: rgba(255, 0, 110, 0.15);
+  border: 2px solid var(--tertiary-neon);
   color: var(--tertiary-neon);
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
 }
 
 .close-newsletter:hover {
   color: var(--secondary-neon);
+  border-color: var(--secondary-neon);
+  background: rgba(255, 0, 110, 0.25);
+  box-shadow: 0 0 15px var(--secondary-neon);
+  transform: scale(1.1);
+}
+
+.close-newsletter:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .close-newsletter {
+    width: 48px;
+    height: 48px;
+    font-size: 1.8rem;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(255, 0, 110, 0.2);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+  }
 }
 
 .newsletter-content {
